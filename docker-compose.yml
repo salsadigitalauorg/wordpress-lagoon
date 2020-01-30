@@ -2,13 +2,14 @@ version: '2.3'
 
 x-lagoon-project:
   # Lagoon project name (leave `&lagoon-project` when you edit this)
-  &lagoon-project wordpress-example
+  &lagoon-project wordpress-lagoon
 
 x-volumes:
   &default-volumes
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - .:/app:delegated
+      - uploads:/app/web/wp-content/uploads
 
 x-environment:
   &default-environment
@@ -20,6 +21,8 @@ x-environment:
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     #XDEBUG_ENABLE: "true"
 
+volumes:
+  uploads: {}
 
 services:
 
@@ -53,6 +56,8 @@ services:
       - cli # basically just tells docker-compose to build the cli first
     environment:
       << : *default-environment # loads the defined environment variables from the top
+    ports:
+      - "8080"
     networks:
       - amazeeio-network
       - default
