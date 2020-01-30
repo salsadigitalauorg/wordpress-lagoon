@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "370e1cef7ccc54c8295862e1e35a43f0",
+    "content-hash": "8cb03c0cf7a5b63a65e9a84d0df5bdba",
     "packages": [
         {
             "name": "composer/installers",
@@ -130,20 +130,20 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "5.3.0",
+            "version": "5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "2b710cf99daf1c219948cd6ee4719ccfbd12e109"
+                "reference": "a463d27a25d317c270e93f7259e2b138287bf8c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/2b710cf99daf1c219948cd6ee4719ccfbd12e109",
-                "reference": "2b710cf99daf1c219948cd6ee4719ccfbd12e109",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/a463d27a25d317c270e93f7259e2b138287bf8c4",
+                "reference": "a463d27a25d317c270e93f7259e2b138287bf8c4",
                 "shasum": ""
             },
             "require": {
-                "johnpbloch/wordpress-core": "5.3.0",
+                "johnpbloch/wordpress-core": "5.3.2",
                 "johnpbloch/wordpress-core-installer": "^1.0",
                 "php": ">=5.6.20"
             },
@@ -165,27 +165,27 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2019-11-12T20:45:58+00:00"
+            "time": "2019-12-18T22:32:20+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.3.0",
+            "version": "5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "17ddddaf049e82655c6d3831ca787350807b0566"
+                "reference": "a282ab0051fac21d4e0cdd828519e6739743ba92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/17ddddaf049e82655c6d3831ca787350807b0566",
-                "reference": "17ddddaf049e82655c6d3831ca787350807b0566",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/a282ab0051fac21d4e0cdd828519e6739743ba92",
+                "reference": "a282ab0051fac21d4e0cdd828519e6739743ba92",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.20"
             },
             "provide": {
-                "wordpress/core-implementation": "5.3.0"
+                "wordpress/core-implementation": "5.3.2"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -205,7 +205,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2019-11-12T20:45:53+00:00"
+            "time": "2019-12-18T22:32:15+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -358,16 +358,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.12.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "550ebaac289296ce228a706d0867afc34687e3f4"
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/550ebaac289296ce228a706d0867afc34687e3f4",
-                "reference": "550ebaac289296ce228a706d0867afc34687e3f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
                 "shasum": ""
             },
             "require": {
@@ -379,7 +379,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -412,7 +412,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-08-06T08:03:45+00:00"
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -467,17 +467,15 @@
         },
         {
             "name": "wpackagist-theme/twentyseventeen",
-            "version": "1.9",
+            "version": "2.2",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentyseventeen/",
-                "reference": "1.9"
+                "reference": "2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentyseventeen.1.9.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/theme/twentyseventeen.2.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -489,16 +487,16 @@
     "packages-dev": [
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.2",
+            "version": "3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7"
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +534,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2019-10-28T04:36:32+00:00"
+            "time": "2019-12-04T04:46:47+00:00"
         }
     ],
     "aliases": [],
@@ -545,7 +543,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6"
+        "php": ">=7.2"
     },
     "platform-dev": []
 }
