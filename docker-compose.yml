@@ -9,13 +9,16 @@ x-volumes:
     # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - .:/app:delegated
-      - uploads:/app/web/wp-content/uploads
+      - uploads:/app/web/content/uploads
+      - themes:/app/web/content/themes
 
 x-environment:
   &default-environment
     LAGOON_PROJECT: *lagoon-project
     # Route that should be used locally
     LAGOON_ROUTE: http://wordpress-nginx.docker.amazee.io
+    LAGOON_PRODUCTION_URL: http://wordpress-nginx.docker.amazee.io
+    LAGOON_PRODUCTION_HOST: wordpress-nginx.docker.amazee.io
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
@@ -23,6 +26,7 @@ x-environment:
 
 volumes:
   uploads: {}
+  themes: {}
 
 services:
 
