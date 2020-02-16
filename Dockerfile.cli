@@ -1,5 +1,5 @@
 FROM amazeeio/php:7.2-cli
-COPY composer.json composer.lock /app/
+COPY composer.json composer.lock wp.json project.json /app/
 
 RUN composer install --no-dev --prefer-dist --working-dir=/app
 
@@ -10,6 +10,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN echo 'wp() { /usr/local/bin/wp "$@" --allow-root; }' >>  ~/.bashrc
 
 COPY . /app
+COPY themes /app/web/content/themes
 
 ENV WEBROOT=web
 ENV PAGER=less
