@@ -1,4 +1,7 @@
+.data
+!.data/.gitkeep
 vendor
 web/wp
-web/content/themes
+web/content/plugins/*
+!web/content/plugins/.gitkeep
 web

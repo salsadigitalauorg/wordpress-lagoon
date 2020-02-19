@@ -9,8 +9,9 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 # Add function to .bashrc to run wp-cli with --allow-root
 RUN echo 'wp() { /usr/local/bin/wp "$@" --allow-root; }' >>  ~/.bashrc
 
-COPY . /app
+COPY web /app/web
 COPY themes /app/web/content/themes
+COPY plugins /app/web/content/plugins
 
 ENV WEBROOT=web
 ENV PAGER=less

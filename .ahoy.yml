@@ -30,17 +30,17 @@ commands:
   install-site:
     usage: Install a vanilla Wordpress site.
     cmd: |
-      ahoy mysql-dump
+      echo "Installing a vanilla Wordpress site as $LOCALDEV_URL"
       docker-compose exec -T cli \
         wp db reset --yes \
           --path=/app/web/wp \
-          --url=$LAGOON_ROUTE \
+          --url=$LOCALDEV_URL \
           --allow-root
       docker-compose exec -T cli \
         wp core install \
         --allow-root \
-        --url=$LAGOON_ROUTE \
-        --title=$HOSTNAME \
+        --url=$LOCALDEV_URL \
+        --title=$COMPOSE_PROJECT_NAME \
         --admin_user=admin \
         --admin_email=admin@example.com \
         --skip-email \
@@ -56,7 +56,7 @@ commands:
 
   wp:
     usage: Run wp-cli commands in TEST container.
-    cmd: docker-compose exec -T cli wp "$@"
+    cmd: docker-compose exec -T cli wp --allow-root --path=/app/web/wp "$@"
 
   logs:
     usage: Show Docker logs.
@@ -87,6 +87,14 @@ commands:
     usage: Dump data out into a file. `ahoy wp db export local.sql"`
     cmd: docker-compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp "$@"'
 
+  refresh-db:
+    usage: Loads database files from .data/db.sql and imports into container
+    cmd: |
+      if [ -f ".data/db.sql" ] ; then
+        ahoy mysql-import .data/db.sql
+      else echo "File .data/db.sql not found, no database imported"
+      fi
+
   confirm:
     cmd: |
       read -r -p "$@ [y/N] " response
@@ -97,3 +105,15 @@ commands:
         false
       fi
     hide: true
+
+entrypoint:
+  - bash
+  - "-c"
+  - "-e"
+  - |
+    [ -f .env ] && [ -s .env ] && export $(grep -v '^#' .env | xargs) && if [ -f .env.local ] && [ -s .env.local ]; then export $(grep -v '^#' .env.local | xargs); fi
+    export APP=${APP:-/app}
+    export WEBROOT=web
+    bash -e -c "$0" "$@"
+  - '{{cmd}}'
+  - '{{name}}'
