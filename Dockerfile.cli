@@ -1,6 +1,7 @@
 FROM amazeeio/php:7.2-cli
 COPY composer.json composer.lock wp.json project.json /app/
 
+RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
 RUN composer install --no-dev --prefer-dist --working-dir=/app
 
 # Install wp-cli
@@ -12,6 +13,9 @@ RUN echo 'wp() { /usr/local/bin/wp "$@" --allow-root; }' >>  ~/.bashrc
 COPY web /app/web
 COPY themes /app/web/content/themes
 COPY plugins /app/web/content/plugins
+
+# Copy themes shipped with wordpress to the content/themes directory.
+RUN /bin/cp -Rf /app/web/wp/wp-content/themes/* /app/web/content/themes/
 
 ENV WEBROOT=web
 ENV PAGER=less

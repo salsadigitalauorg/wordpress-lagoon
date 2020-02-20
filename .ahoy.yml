@@ -25,7 +25,8 @@ commands:
 
   build:
     usage: Build project.
-    cmd: docker-compose up -d --build "$@"
+    cmd: |
+      docker-compose up -d --build "$@"
 
   install-site:
     usage: Install a vanilla Wordpress site.
@@ -105,6 +106,14 @@ commands:
         false
       fi
     hide: true
+
+clean:
+  usage: Remove containers and all build files.
+  cmd: |
+    ahoy down y
+    docker image remove $(docker images | grep '^${COMPOSE_PROJECT_NAME}') | awk '{print $1}'
+    rm -rf \
+      ./vendor
 
 entrypoint:
   - bash

@@ -10,6 +10,7 @@ x-volumes:
     volumes:
       - .:/app:delegated
       - uploads:/app/web/content/uploads
+      - themes:/app/web/content/themes
 
 x-environment:
   &default-environment
