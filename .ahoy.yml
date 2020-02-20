@@ -21,7 +21,11 @@ commands:
 
   clean:
     usage: Stop Docker containers and remove container, images, volumes and networks.
-    cmd: "if [ -f \"docker-compose.yml\" ]; then docker-compose down --volumes; fi"
+    cmd: |
+      if [ -f \"docker-compose.yml\" ]; then
+        docker-compose down --volumes;
+      fi
+      rm -rf ./vendor
 
   build:
     usage: Build project.
@@ -106,14 +110,6 @@ commands:
         false
       fi
     hide: true
-
-clean:
-  usage: Remove containers and all build files.
-  cmd: |
-    ahoy down y
-    docker image remove $(docker images | grep '^${COMPOSE_PROJECT_NAME}') | awk '{print $1}'
-    rm -rf \
-      ./vendor
 
 entrypoint:
   - bash
