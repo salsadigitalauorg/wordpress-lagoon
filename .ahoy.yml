@@ -22,7 +22,7 @@ commands:
   clean:
     usage: Stop Docker containers and remove container, images, volumes and networks.
     cmd: |
-      if [ -f \"docker-compose.yml\" ]; then
+      if [ -f "docker-compose.yml" ]; then
         docker-compose down --volumes;
       fi
       rm -rf ./vendor
