@@ -83,8 +83,8 @@ commands:
     usage: Pipe in a sql file.  `ahoy mysql-import local.sql`
     cmd: |
       if [ -e "$@" ] ; then
-        docker-compose exec cli bash -c 'wp db reset --yes' &&
-        docker-compose exec -T cli bash -c 'wp db query' < "$@"
+        docker-compose exec cli bash -c 'wp db reset --path=/app/web/wp --yes' &&
+        docker-compose exec -T cli bash -c 'wp db query --path=/app/web/wp' < "$@"
       else echo "Provided sql file" "$@" "does not exist"
       fi
 
