@@ -90,6 +90,7 @@ define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
 $schema = !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
 $http_host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('LAGOON_PRODUCTION_URL');
 define('WP_CONTENT_URL', $schema . $http_host . '/content');
+
 // Must-use plugins directory.
 define('WPMU_PLUGIN_DIR', '/app/web/content/mu-plugins');
 define('WPMU_PLUGIN_URL', $schema . $http_host . '/content/mu-plugins');

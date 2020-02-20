@@ -1,7 +1,7 @@
 .data
 !.data/.gitkeep
 vendor
-web/wp
-web/content/plugins/*
-!web/content/plugins/.gitkeep
 web
+!web/content/plugins/.gitkeep
+!web/content/themes/.gitkeep
+!web/content/mu-plugins/load.php
