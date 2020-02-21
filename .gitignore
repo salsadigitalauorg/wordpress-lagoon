@@ -2,6 +2,6 @@
 !.data/.gitkeep
 vendor
 web
-!web/content/plugins/.gitkeep
+!web/content/plugins
 !web/content/themes/.gitkeep
 !web/content/mu-plugins/load.php
