@@ -14,8 +14,8 @@ COPY web /app/web
 COPY themes /app/web/content/themes/
 COPY plugins /app/web/content/plugins/
 
-# Copy themes shipped with wordpress to the content/themes directory.
-RUN /bin/cp -Rf /app/web/wp/wp-content/themes/* /app/web/content/themes/
+# Remove themes shipped with wordpress in the web/wp/wp-content/themes.
+RUN /bin/rm -Rf /app/web/wp/wp-content/themes
 
 ENV WEBROOT=web
 ENV PAGER=less

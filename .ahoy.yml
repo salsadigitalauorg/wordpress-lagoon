@@ -32,6 +32,16 @@ commands:
     cmd: |
       docker-compose up -d --build --force-recreate "$@"
 
+  build-containers:
+    usage: Build containers using dockerfiles.
+    cmd: |
+      docker build -t ivrh/wordpress-lagoon-cli:latest -f Dockerfile.cli .
+
+  push-containers:
+    usage: Push containers to the remote repository.
+    cmd: |
+      docker push ivrh/wordpress-lagoon-cli:latest
+
   install-site:
     usage: Install a vanilla Wordpress site.
     cmd: |
@@ -50,12 +60,7 @@ commands:
         --admin_email=admin@example.com \
         --skip-email \
         --path=/app/web/wp
-      docker-compose exec -T cli \
-        wp theme enable twentytwenty \
-        --activate \
-        --allow-root \
-        --url=$LOCALDEV_URL \
-        --path=/app/web/wp
+      ahoy wp theme activate twentytwenty
 
   cli:
     usage: Start a shell inside TEST container.
@@ -68,6 +73,10 @@ commands:
   wp:
     usage: Run wp-cli commands in TEST container.
     cmd: docker-compose exec -T cli wp --allow-root --path=/app/web/wp "$@"
+
+  composer:
+    usage: Runs composer inside conainer
+    cmd: COMPOSER_MEMORY_LIMIT=-1 composer "$@" --ignore-platform-reqs
 
   logs:
     usage: Show Docker logs.
@@ -107,6 +116,10 @@ commands:
         ahoy mysql-import .data/db.sql
       else echo "File .data/db.sql not found, no database imported"
       fi
+
+  pull:
+    usage: Pull latest docker images.
+    cmd: docker image ls --format \"{{.Repository}}:{{.Tag}}\" | grep wordpress-lagoon-cli | grep -v none | xargs -n1 docker pull | cat
 
   confirm:
     cmd: |
