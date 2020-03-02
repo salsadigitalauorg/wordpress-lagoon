@@ -23,14 +23,14 @@ commands:
     usage: Stop Docker containers and remove container, images, volumes and networks.
     cmd: |
       if [ -f "docker-compose.yml" ]; then
-        docker-compose down --volumes;
+        docker-compose down --volumes
       fi
       rm -rf ./vendor
 
   build:
     usage: Build project.
     cmd: |
-      docker-compose up -d --build "$@"
+      docker-compose up -d --build --force-recreate "$@"
 
   install-site:
     usage: Install a vanilla Wordpress site.
@@ -49,6 +49,12 @@ commands:
         --admin_user=admin \
         --admin_email=admin@example.com \
         --skip-email \
+        --path=/app/web/wp
+      docker-compose exec -T cli \
+        wp theme enable twentytwenty \
+        --activate \
+        --allow-root \
+        --url=$LOCALDEV_URL \
         --path=/app/web/wp
 
   cli:
@@ -83,9 +89,11 @@ commands:
     usage: Pipe in a sql file.  `ahoy mysql-import local.sql`
     cmd: |
       if [ -e "$@" ] ; then
-        docker-compose exec cli bash -c 'wp db reset --path=/app/web/wp --yes' &&
-        docker-compose exec -T cli bash -c 'wp db query --path=/app/web/wp' < "$@"
-      else echo "Provided sql file" "$@" "does not exist"
+        docker-compose exec cli bash -c 'wp --path=/app/web/wp db reset --yes' &&
+        docker-compose exec -T cli bash -c 'wp --path=/app/web/wp db query' < "$@" &&
+        docker-compose exec -T cli bash -c 'wp --path=/app/web/wp option update blogname "$COMPOSE_PROJECT_NAME $LAGOON_ENVIRONMENT_TYPE"'
+      else
+        echo "Provided sql file" "$@" "does not exist"
       fi
 
   mysql-dump:

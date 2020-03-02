@@ -4,7 +4,7 @@
     "roots/wp-config": "^1.0.0",
     "roots/wp-password-bcrypt": "^1.0.0",
     "wpackagist-plugin/wordpress-seo": "^13.0",
-    "wpackagist-theme/twentyseventeen": "^2.2",
+    "wpackagist-plugin/twentytwenty":"^1.0.1",
     "wpackagist-plugin/disable-wp-rest-api": "^1.7"
   },
   "require-dev": {
