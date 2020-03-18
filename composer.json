@@ -46,8 +46,7 @@
   "extra": {
     "installer-paths": {
       "web/content/mu-plugins/{$name}/": [
-        "type:wordpress-muplugin",
-        "wpackagist-plugin/disable-wp-rest-api"
+        "type:wordpress-muplugin"
       ],
       "web/content/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/content/themes/{$name}/": ["type:wordpress-theme"]
