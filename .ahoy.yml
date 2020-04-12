@@ -35,12 +35,12 @@ commands:
   build-containers:
     usage: Build containers using dockerfiles.
     cmd: |
-      docker build -t ivrh/wordpress-lagoon-cli:latest -f Dockerfile.cli .
+      docker build -t salsadigital/wordpress-lagoon-cli:latest -f Dockerfile.cli .
 
   push-containers:
     usage: Push containers to the remote repository.
     cmd: |
-      docker push ivrh/wordpress-lagoon-cli:latest
+      docker push salsadigital/wordpress-lagoon-cli:latest
 
   install-site:
     usage: Install a vanilla Wordpress site.
