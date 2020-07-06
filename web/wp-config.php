@@ -95,6 +95,12 @@ define('WP_CONTENT_URL', $schema . $http_host . '/content');
 define('WPMU_PLUGIN_DIR', '/app/web/content/mu-plugins');
 define('WPMU_PLUGIN_URL', $schema . $http_host . '/content/mu-plugins');
 
+// Add CDN-77 specific headers to prevent mixed content warning.
+if (!empty($_SERVER['server']) && stristr($_SERVER['server'], 'CDN77')) {
+  $_SERVER['HTTPS'] = 'on';
+  $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+}
+
 /** Sets up WordPress vars and included files. */
 require_once( ABSPATH . 'wp-settings.php' );
 
