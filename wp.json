@@ -9,7 +9,8 @@
     "wpackagist-plugin/classic-editor":"^1.5",
     "wpackagist-plugin/image-elevator":"^2.6.2",
     "wpackagist-plugin/wp-smushit":"^3.4.2",
-    "wpackagist-plugin/yoimages":"^0.1.8"
+    "wpackagist-plugin/yoimages":"^0.1.8",
+    "wpackagist-plugin/wp-accessibility":"^1.7.1"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
