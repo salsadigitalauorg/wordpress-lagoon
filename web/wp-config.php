@@ -1,4 +1,16 @@
 <?php
+
+// Adding configuration to enable WP cache plugin.
+if (getenv('ENABLE_WP_CACHE')) {
+  /** Enable W3 Total Cache */
+  define('WP_CACHE', true); // Managed in project-level in .env file.
+}
+
+// Add CDN-77 specific headers to prevent mixed content warning.
+if (!empty($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], 'cdn77')) {
+  $_SERVER['HTTPS'] = 'on';
+}
+
 /**
  * The base configuration for WordPress
  *
