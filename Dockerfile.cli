@@ -1,4 +1,8 @@
 FROM amazeeio/php:7.2-cli
+
+# Adding caching directory.
+RUN mkdir -p /app/web/content/cache/tmp && fix-permissions /app/web/content/cache/tmp
+
 COPY composer.json composer.lock wp.json project.json /app/
 
 RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
