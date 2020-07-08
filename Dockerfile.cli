@@ -17,5 +17,8 @@ COPY plugins /app/web/content/plugins/
 # Remove themes shipped with wordpress in the web/wp/wp-content/themes.
 RUN /bin/rm -Rf /app/web/wp/wp-content/themes
 
+# Create temporary wordpress log file.
+RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
+
 ENV WEBROOT=web
 ENV PAGER=less
