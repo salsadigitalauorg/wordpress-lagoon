@@ -20,13 +20,7 @@ RUN /bin/rm -Rf /app/web/wp/wp-content/themes
 
 # Adding caching directory.
 RUN mkdir -p /app/web/content/cache && \
-    fix-permissions /app/web/content/cache && \
-    mkdir -p /app/web/content/w3tc-config && \
-    fix-permissions /app/web/content/w3tc-config && \
-    chgrp 0 /app/web/content && \
-    chmod g+rwx /app/web/content && \
-    /bin/cp -f web/content/plugins/w3-total-cache/wp-content/advanced-cache.php /app/web/content/advanced-cache.php && \
-    chmod g-w /app/web/content
+    fix-permissions /app/web/content/cache
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
