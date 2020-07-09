@@ -1,6 +1,3 @@
-ARG CLI_IMAGE
-FROM ${CLI_IMAGE:-builder} as builder
-
 FROM amazeeio/nginx
 
 COPY lagoon/nginx.conf /etc/nginx/conf.d/app.conf
