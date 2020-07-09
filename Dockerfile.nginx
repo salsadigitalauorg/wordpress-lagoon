@@ -8,11 +8,3 @@ COPY lagoon/stagefile-*.conf /etc/nginx/conf.d/wordpress/
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
-
-COPY --from=builder /app /app
-
-# Create nginx.conf file for caching plugins s.a. W3TotalCache
-RUN touch /app/web/wp/nginx.conf && fix-permissions /app/web/wp/nginx.conf
-
-ENV WEBROOT=web
-
