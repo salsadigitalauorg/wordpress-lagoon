@@ -8,3 +8,4 @@ COPY lagoon/stagefile-*.conf /etc/nginx/conf.d/wordpress/
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
+ENV WEBROOT=web
