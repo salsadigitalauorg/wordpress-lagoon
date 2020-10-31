@@ -1,8 +1,16 @@
+ARG CLI_IMAGE
+FROM ${CLI_IMAGE:-builder} as builder
+
 FROM amazeeio/nginx
+
+COPY .docker/nginx/nginx.conf /etc/nginx/conf.d/app.conf
+
+# Adding Stagefile helper
+COPY .docker/nginx/stagefile-*.conf /etc/nginx/conf.d/wordpress/
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
 
-COPY .docker/nginx/901-deny-backups.conf /etc/nginx/helpers/
+COPY --from=builder /app /app
 
 ENV WEBROOT=web

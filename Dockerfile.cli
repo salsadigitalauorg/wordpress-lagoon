@@ -28,7 +28,7 @@ RUN mkdir -p /app/web/content/cache && \
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
 
 # Created database backups directory.
-RUN mkdir -p /app/web/content/uploads/.backups
+RUN mkdir -p /app/web/content/uploads/backups
 
 ENV WEBROOT=web
 ENV PAGER=less
