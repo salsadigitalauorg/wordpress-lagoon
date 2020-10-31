@@ -111,7 +111,7 @@ commands:
 
   backup:
     usage: Backup database into the persistent volume content/uploads/backups
-    cmd: docker-compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp > /app/web/content/uploads/backups/pre-deploy-backup-`date +%Y-%m-%d-%T`.db.sql'
+    cmd: docker-compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp - | gzip > /app/web/content/uploads/backups/pre-deploy-backup-`date +%Y-%m-%d-%T`.db.sql.gz'
 
   refresh-db:
     usage: Loads database files from .data/db.sql and imports into container
