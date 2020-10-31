@@ -48,8 +48,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-      args:
-        CLI_IMAGE: *lagoon-project # Inject the name of the cli image
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/content/uploads/ # define where the persistent storage should be mounted too
@@ -66,8 +64,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.php
-      args:
-        CLI_IMAGE: *lagoon-project
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon

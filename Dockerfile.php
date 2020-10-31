@@ -1,5 +1,5 @@
 ARG CLI_IMAGE
-FROM ${CLI_IMAGE:-builder} as builder
+FROM salsadigital/wordpress-lagoon-cli:latest as builder
 
 FROM amazeeio/php:7.3-fpm
 
