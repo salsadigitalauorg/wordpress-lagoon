@@ -2,7 +2,7 @@ version: '2.3'
 
 x-lagoon-project:
   # Lagoon project name (leave `&lagoon-project` when you edit this)
-  &lagoon-project wordpress-example
+  &lagoon-project wordpress-nginx
 
 x-volumes:
   &default-volumes
@@ -10,6 +10,7 @@ x-volumes:
     volumes:
       - .:/app:delegated
       - uploads:/app/web/content/uploads
+      - backups:/app/web/content/uploads/.backups
 
 x-environment:
   &default-environment
@@ -25,6 +26,7 @@ x-environment:
 
 volumes:
   uploads: {}
+  backups: {}
 
 services:
 

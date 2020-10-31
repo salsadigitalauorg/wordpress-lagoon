@@ -2,4 +2,7 @@ FROM amazeeio/nginx
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
+
+COPY .docker/nginx/901-deny-backups.conf /etc/nginx/helpers/
+
 ENV WEBROOT=web
