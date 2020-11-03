@@ -72,7 +72,6 @@ services:
     environment:
       << : *default-environment # loads the defined environment variables from the top
 
-
   mariadb:
     image: amazeeio/mariadb
     labels:
