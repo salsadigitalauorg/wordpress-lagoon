@@ -3,7 +3,9 @@ FROM amazeeio/php:7.3-cli
 COPY composer.json composer.lock wp.json project.json /app/
 
 RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
-RUN composer update --lock --no-dev --prefer-dist --working-dir=/app
+RUN composer self-update --1 && \
+    composer update --lock --no-dev --prefer-dist --working-dir=/app && \
+    composer install --no-dev --prefer-dist -n --no-interaction
 
 # Install wp-cli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp && chmod +x /usr/local/bin/wp
@@ -24,6 +26,10 @@ RUN mkdir -p /app/web/content/cache && \
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
+
+# Created database backups directory.
+RUN fix-permissions /app/web/content/uploads && \
+    mkdir -p /app/web/content/uploads/backups
 
 ENV WEBROOT=web
 ENV PAGER=less
