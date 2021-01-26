@@ -10,7 +10,8 @@
     "wpackagist-plugin/image-elevator":"^2.6.2",
     "wpackagist-plugin/wp-smushit":"^3.7.1",
     "wpackagist-plugin/yoimages":"^0.1.8",
-    "wpackagist-plugin/wp-accessibility":"^1.7.3"
+    "wpackagist-plugin/wp-accessibility":"^1.7.3",
+    "wp_lagoon_logs/wp_lagoon_logs": "dev-master"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
