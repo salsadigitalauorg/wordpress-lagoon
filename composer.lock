@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a5287aa5c07210c44b6df853ab2a585",
+    "content-hash": "1f4c672ee2f27fd4dd4fd7a4d26db576",
     "packages": [
         {
             "name": "composer/installers",
@@ -805,12 +805,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/salsadigitalauorg/wp_lagoon_logs.git",
-                "reference": "e94de5efef0242a4d322d76122e25a55a3e329ff"
+                "reference": "ba2b135e9e8ac2045dfcef444e65d4ae88ff7457"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/e94de5efef0242a4d322d76122e25a55a3e329ff",
-                "reference": "e94de5efef0242a4d322d76122e25a55a3e329ff",
+                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/ba2b135e9e8ac2045dfcef444e65d4ae88ff7457",
+                "reference": "ba2b135e9e8ac2045dfcef444e65d4ae88ff7457",
                 "shasum": ""
             },
             "require": {
@@ -829,15 +829,21 @@
             ],
             "authors": [
                 {
-                    "name": "Govind Maloo"
+                    "name": "SalsaDigital (salsa.digital)",
+                    "homepage": "https://salsa.digital",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Govind Maloo",
+                    "role": "Developer"
                 }
             ],
-            "description": "Lagoon logs plugin.",
+            "description": "Lagoon logs Wordpress plugin.",
             "keywords": [
                 "lagoon",
                 "wordpress"
             ],
-            "time": "2021-01-26T01:17:58+00:00"
+            "time": "2021-01-29T02:27:43+00:00"
         },
         {
             "name": "wpackagist-plugin/akismet",
@@ -895,15 +901,15 @@
         },
         {
             "name": "wpackagist-plugin/wordpress-seo",
-            "version": "15.6.2",
+            "version": "15.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/15.6.2"
+                "reference": "tags/15.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.15.6.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.15.7.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
