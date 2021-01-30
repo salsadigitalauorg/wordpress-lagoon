@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f4c672ee2f27fd4dd4fd7a4d26db576",
+    "content-hash": "ddce319bd9c77482f2ea0460234cad70",
     "packages": [
         {
             "name": "composer/installers",
@@ -801,16 +801,16 @@
         },
         {
             "name": "wp_lagoon_logs/wp_lagoon_logs",
-            "version": "0.1",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/salsadigitalauorg/wp_lagoon_logs.git",
-                "reference": "fb04395cc26f32f1d8296ad341df8533fedbd0ce"
+                "reference": "ff102ac7bc177ac315aeb40add481d75cd1e5226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/fb04395cc26f32f1d8296ad341df8533fedbd0ce",
-                "reference": "fb04395cc26f32f1d8296ad341df8533fedbd0ce",
+                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/ff102ac7bc177ac315aeb40add481d75cd1e5226",
+                "reference": "ff102ac7bc177ac315aeb40add481d75cd1e5226",
                 "shasum": ""
             },
             "require": {
@@ -843,7 +843,7 @@
                 "lagoon",
                 "wordpress"
             ],
-            "time": "2021-01-29T03:50:36+00:00"
+            "time": "2021-01-30T08:43:38+00:00"
         },
         {
             "name": "wpackagist-plugin/akismet",
