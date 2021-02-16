@@ -11,7 +11,8 @@
     "wpackagist-plugin/wp-smushit":"^3.7.1",
     "wpackagist-plugin/yoimages":"^0.1.8",
     "wpackagist-plugin/wp-accessibility":"^1.7.3",
-    "wp_lagoon_logs/wp_lagoon_logs": "^0.2"
+    "wp_lagoon_logs/wp_lagoon_logs": "^0.2",
+    "wpackagist-plugin/site-offline":"^1.4.5"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
