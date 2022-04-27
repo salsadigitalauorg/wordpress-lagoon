@@ -1,4 +1,4 @@
-FROM uselagoon/php:7.4-cli
+FROM uselagoon/php-7.4-cli
 
 COPY composer.json composer.lock wp.json project.json /app/
 
@@ -15,6 +15,10 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN echo 'wp() { /usr/local/bin/wp "$@" --allow-root; }' >>  ~/.bashrc
 
 COPY web /app/web
+
+# Make docroot read-only.
+RUN chmod -R a-w /app/web; chmod -R a-w /app/vendor
+
 COPY themes /app/web/content/themes/
 COPY plugins /app/web/content/plugins/
 
