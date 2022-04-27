@@ -18,6 +18,7 @@ x-environment:
     LAGOON_ROUTE: ${LAGOON_ROUTE:-http://wordpress-nginx.docker.amazee.io}
     # Uncomment if you like to have the system behave like in production
     LAGOON_ENVIRONMENT_TYPE: production
+    LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD: ${LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD:-enabled}
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     # XDEBUG_ENABLE: "true"
 
