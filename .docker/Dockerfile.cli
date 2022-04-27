@@ -16,9 +16,6 @@ RUN echo 'wp() { /usr/local/bin/wp "$@" --allow-root; }' >>  ~/.bashrc
 
 COPY web /app/web
 
-# Make docroot read-only.
-RUN chmod -R a-w /app/web; chmod -R a-w /app/vendor
-
 COPY themes /app/web/content/themes/
 COPY plugins /app/web/content/plugins/
 
