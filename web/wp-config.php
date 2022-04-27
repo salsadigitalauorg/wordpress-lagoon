@@ -110,6 +110,9 @@ define('WP_CONTENT_URL', $schema . $http_host . '/content');
 define('WPMU_PLUGIN_DIR', '/app/web/content/mu-plugins');
 define('WPMU_PLUGIN_URL', $schema . $http_host . '/content/mu-plugins');
 
+// Disable Wordpress core update
+define( 'WP_AUTO_UPDATE_CORE', false );
+
 /** Sets up WordPress vars and included files. */
 require_once( ABSPATH . 'wp-settings.php' );
 
