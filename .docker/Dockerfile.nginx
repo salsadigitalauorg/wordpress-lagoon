@@ -1,6 +1,6 @@
 FROM salsadigital/wordpress-lagoon-cli:latest as builder
 
-FROM uselagoon/nginx
+FROM uselagoon/nginx:latest
 
 COPY .docker/nginx/nginx.conf /etc/nginx/conf.d/app.conf
 
