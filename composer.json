@@ -46,7 +46,7 @@
     "vlucas/phpdotenv": "^2.6.7",
     "wikimedia/composer-merge-plugin": "^1.4",
     "wp_lagoon_logs/wp_lagoon_logs": "^0.2",
-    "wpackagist-plugin/akismet": "^4.1.7",
+    "wpackagist-plugin/akismet": "^5.0",
     "wpackagist-plugin/classic-editor": "^1.6",
     "wpackagist-plugin/image-elevator": "^2.6",
     "wpackagist-plugin/site-offline": "^1.4",
@@ -54,7 +54,7 @@
     "wpackagist-plugin/wp-accessibility": "^1.7",
     "wpackagist-plugin/wp-smushit": "^3.9",
     "wpackagist-plugin/yoimages": "^0.1.8",
-    "wpackagist-theme/twentytwenty": "^1.8"
+    "wpackagist-theme/twentytwenty": "^2.0"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
