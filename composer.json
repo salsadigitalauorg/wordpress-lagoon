@@ -54,7 +54,7 @@
     "wpackagist-plugin/wp-accessibility": "^1.7",
     "wpackagist-plugin/wp-smushit": "^3.9",
     "wpackagist-plugin/yoimages": "^0.1.8",
-    "wpackagist-theme/twentytwenty": "^2.0"
+    "wpackagist-theme/twentytwentytwo": "^1.2"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c90affdb10610822acde0fa9eb8492ef",
+    "content-hash": "e5219156fc454902aa466ac472f4f083",
     "packages": [
         {
             "name": "composer/installers",
@@ -1070,22 +1070,22 @@
             "homepage": "https://wordpress.org/plugins/yoimages/"
         },
         {
-            "name": "wpackagist-theme/twentytwenty",
-            "version": "2.0",
+            "name": "wpackagist-theme/twentytwentytwo",
+            "version": "1.2",
             "source": {
                 "type": "svn",
-                "url": "https://themes.svn.wordpress.org/twentytwenty/",
-                "reference": "2.0"
+                "url": "https://themes.svn.wordpress.org/twentytwentytwo/",
+                "reference": "1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentytwenty.2.0.zip"
+                "url": "https://downloads.wordpress.org/theme/twentytwentytwo.1.2.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
             },
             "type": "wordpress-theme",
-            "homepage": "https://wordpress.org/themes/twentytwenty/"
+            "homepage": "https://wordpress.org/themes/twentytwentytwo/"
         }
     ],
     "packages-dev": [
