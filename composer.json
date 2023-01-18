@@ -53,7 +53,6 @@
     "wpackagist-plugin/wordpress-seo": "^19.3",
     "wpackagist-plugin/wp-accessibility": "^1.7",
     "wpackagist-plugin/wp-smushit": "^3.9",
-    "wpackagist-plugin/yoimages": "^0.1.8",
     "wpackagist-theme/twentytwentytwo": "^1.2"
   },
   "require-dev": {
