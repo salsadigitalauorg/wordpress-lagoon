@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10edf99a53053da027cabda242b4cdd3",
+    "content-hash": "4196eeb9c0f4ef2ae3742c16395b5721",
     "packages": [
         {
             "name": "composer/installers",
@@ -1017,15 +1017,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-accessibility",
-            "version": "1.9.2",
+            "version": "2.0.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-accessibility/",
-                "reference": "tags/1.9.2"
+                "reference": "tags/2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.9.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.2.0.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
