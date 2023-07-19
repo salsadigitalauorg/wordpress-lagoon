@@ -7,7 +7,7 @@ if (getenv('ENABLE_WP_CACHE')) {
 }
 
 // Disable built-in crontab.
-define(‘DISABLE_WP_CRON’, true);
+define('DISABLE_WP_CRON', true);
 
 // Disable plugin updates.
 if (getenv('LAGOON_ENVIRONMENT') == 'production' || getenv('LAGOON_ENVIRONMENT') == 'master') {
@@ -24,6 +24,28 @@ define('FS_METHOD', 'direct');
 if (!empty($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], 'cdn77')) {
   $_SERVER['HTTPS'] = 'on';
 }
+
+/** Settings that make Quant work properly. */
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://';
+
+if (!empty($_SERVER['HTTP_HOST'])) {
+  define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST']);
+  define('WP_HOME', $protocol . $_SERVER['HTTP_HOST']);
+  define('WP_PLUGIN_URL', $protocol . $_SERVER['HTTP_HOST'] . '/content/plugins' );
+  define('WP_CONTENT_URL', $protocol . $_SERVER['HTTP_HOST'] . '/content');
+}
+elseif (!empty(getenv('LAGOON_ROUTE'))) {
+  define('WP_SITEURL', $protocol . getenv('LAGOON_ROUTE'));
+  define('WP_HOME', $protocol . getenv('LAGOON_ROUTE'));
+  define('WP_PLUGIN_URL', $protocol . getenv('LAGOON_ROUTE') . '/content/plugins' );
+  define('WP_CONTENT_URL', $protocol . getenv('LAGOON_ROUTE') . '/content');
+}
+define ('WPCF7_LOAD_JS', false);
+
+define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
+define('WP_PLUGIN_DIR', dirname( __FILE__ ) . '/content/plugins' );
+define('WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins');
+define('WPMU_PLUGIN_URL', WP_CONTENT_URL . '/mu-plugins' );
 
 /**
  * The base configuration for WordPress
@@ -103,7 +125,7 @@ $table_prefix = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define( 'WP_DEBUG', true );
+define( 'WP_DEBUG', false );
 define( 'WP_DEBUG_LOG', '/tmp/wp-errors.log' );
 define( 'WP_DEBUG_DISPLAY', false );
 @ini_set( 'display_errors', 0 );
