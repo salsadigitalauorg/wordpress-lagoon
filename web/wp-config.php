@@ -6,6 +6,20 @@ if (getenv('ENABLE_WP_CACHE')) {
   define('WP_CACHE', true); // Managed in project-level in .env file.
 }
 
+// Disable built-in crontab.
+define(‘DISABLE_WP_CRON’, true);
+
+// Disable plugin updates.
+if (getenv('LAGOON_ENVIRONMENT') == 'production' || getenv('LAGOON_ENVIRONMENT') == 'master') {
+  define('DISALLOW_FILE_MODS', TRUE);
+}
+
+// Increase memory limit.
+define('WP_MEMORY_LIMIT','400M');
+
+// Disable FTP.
+define('FS_METHOD', 'direct');
+
 // Add CDN-77 specific headers to prevent mixed content warning.
 if (!empty($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], 'cdn77')) {
   $_SERVER['HTTPS'] = 'on';

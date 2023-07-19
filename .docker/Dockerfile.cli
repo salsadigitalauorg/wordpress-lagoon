@@ -3,7 +3,7 @@ FROM uselagoon/php-8.0-cli
 COPY composer.json composer.lock wp.json project.json /app/
 
 RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
-RUN composer self-update --1 && \
+RUN composer self-update --2 && \
     composer clearcache && \
     composer update --lock --no-dev --prefer-dist --working-dir=/app && \
     composer install --no-dev --prefer-dist -n --no-interaction

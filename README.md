@@ -5,7 +5,7 @@ download the latest image.
 
 ## Build local images
 
-`composer self-update --1 && COMPOSER_MEMORY_LIMIT=1 composer update`
+`composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update`
 
 `docker image build . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:[tag]`
 

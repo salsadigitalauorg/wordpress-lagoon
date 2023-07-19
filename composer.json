@@ -28,7 +28,12 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "roots/wordpress-core-installer": true,
+      "wikimedia/composer-merge-plugin": true
+    }
   },
   "repositories": [
     {
@@ -37,14 +42,14 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
+    "php": ">=8.0",
     "composer/installers": "^1.10",
     "oscarotero/env": "^1.2.0",
     "roots/wordpress": "^6.0.1",
     "roots/wp-config": "^1.0.0",
     "roots/wp-password-bcrypt": "^1.0.0",
     "vlucas/phpdotenv": "^2.6.7",
-    "wikimedia/composer-merge-plugin": "^1.4",
+    "wikimedia/composer-merge-plugin": "dev-master",
     "wp_lagoon_logs/wp_lagoon_logs": "^0.2",
     "wpackagist-plugin/akismet": "^5.0",
     "wpackagist-plugin/classic-editor": "^1.6",
@@ -53,7 +58,8 @@
     "wpackagist-plugin/wordpress-seo": "^20.0",
     "wpackagist-plugin/wp-accessibility": "^2.0",
     "wpackagist-plugin/wp-smushit": "^3.9",
-    "wpackagist-theme/twentytwentytwo": "^1.2"
+    "wpackagist-theme/twentytwentytwo": "^1.2",
+    "wpackagist-plugin/lumturio-wp-monitor": "^1.0"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
