@@ -39,14 +39,6 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
-    },
-    {
-      "name": "salsadigitalauorg/wp_lagoon_logs",
-      "type": "github",
-      "url": "https://github.com/salsadigitalauorg/wp_lagoon_logs",
-      "require": {
-        "composer/installers": "^1.0"
-      }
     }
   ],
   "require": {
@@ -58,7 +50,7 @@
     "roots/wp-password-bcrypt": "^1.0.0",
     "vlucas/phpdotenv": "^2.6.7",
     "wikimedia/composer-merge-plugin": "dev-master",
-    "salsadigitalauorg/wp_lagoon_logs": "^0.2.0",
+    "wp_lagoon_logs/wp_lagoon_logs": "^0.2.0",
     "wpackagist-plugin/akismet": "^5.0",
     "wpackagist-plugin/classic-editor": "^1.6",
     "wpackagist-plugin/image-elevator": "^2.6",

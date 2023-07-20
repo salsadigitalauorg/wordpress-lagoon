@@ -1,12 +1,11 @@
 FROM uselagoon/php-8.0-cli
 
-COPY composer.json composer.lock wp.json project.json /app/
+COPY composer.* wp.json project.json /app/
 
 RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
 RUN composer self-update --2 && \
     composer clearcache && \
-    composer update --lock --no-dev --prefer-dist --working-dir=/app && \
-    composer install --no-dev --prefer-dist -n --no-interaction
+    composer install --no-dev -n --prefer-dist --working-dir=/app
 
 # Install wp-cli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp && chmod +x /usr/local/bin/wp
