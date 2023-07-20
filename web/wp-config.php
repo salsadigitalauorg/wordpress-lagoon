@@ -47,6 +47,27 @@ define('WP_PLUGIN_DIR', dirname( __FILE__ ) . '/content/plugins' );
 define('WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins');
 define('WPMU_PLUGIN_URL', WP_CONTENT_URL . '/mu-plugins' );
 
+// Defining WordPress constants.
+if (getenv('LAGOON_ENVIRONMENT_TYPE')) {
+  define('WP_ENVIRONMENT_TYPE', getenv('LAGOON_ENVIRONMENT_TYPE'));
+}
+
+if (getenv('CONCATENATE_SCRIPTS')) {
+  define('CONCATENATE_SCRIPTS', TRUE);
+}
+
+if (getenv('COMPRESS_SCRIPTS')) {
+  define('COMPRESS_SCRIPTS', TRUE);
+}
+
+if (getenv('COMPRESS_CSS')) {
+  define('COMPRESS_CSS', TRUE);
+}
+
+if (getenv('WP_DEBUG')) {
+  define('WP_DEBUG', TRUE);
+}
+
 /**
  * The base configuration for WordPress
  *
