@@ -146,7 +146,9 @@ $table_prefix = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define( 'WP_DEBUG', false );
+if (!defined('WP_DEBUG')) {
+  define( 'WP_DEBUG', false );
+}
 define( 'WP_DEBUG_LOG', '/tmp/wp-errors.log' );
 define( 'WP_DEBUG_DISPLAY', false );
 @ini_set( 'display_errors', 0 );

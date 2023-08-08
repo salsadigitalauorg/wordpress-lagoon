@@ -1,5 +1,7 @@
 FROM uselagoon/php-8.0-cli
 
+RUN apk add --no-cache tzdata
+
 COPY composer.* wp.json project.json /app/
 
 RUN /bin/rm -Rf /app/web/wp && mkdir -p /app/web/wp
