@@ -53,4 +53,4 @@ function wp_lagoon_config_admin_notices() {
 
 }
 
-add_action('admin_notices', 'show_env_var_admin_notice');
+add_action('admin_notices', 'wp_lagoon_config_admin_notices');
