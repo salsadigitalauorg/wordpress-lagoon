@@ -20,6 +20,11 @@ define('WP_MEMORY_LIMIT','400M');
 // Disable FTP.
 define('FS_METHOD', 'direct');
 
+// Configuring WP 2FA premium plugin.
+if (getenv('WP_LAGOON_WP2FA')) {
+  define( 'WP2FA_ENCRYPT_KEY', getenv('WP_LAGOON_WP2FA'));
+}
+
 // Add CDN-77 specific headers to prevent mixed content warning.
 if (!empty($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], 'cdn77')) {
   $_SERVER['HTTPS'] = 'on';
