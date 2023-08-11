@@ -115,14 +115,61 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
+if (getenv('WP_AUTH_KEY')) {
+  define( 'AUTH_KEY', getenv('WP_AUTH_KEY'));
+}
+else {
+  define( 'WP_MISSING_AUTH_KEY', true);
+}
+
+if (getenv('WP_SECURE_AUTH_KEY')) {
+  define( 'SECURE_AUTH_KEY',  getenv('WP_SECURE_AUTH_KEY'));
+}
+else {
+  define( 'WP_MISSING_SECURE_AUTH_KEY', true);
+}
+
+if (getenv('WP_LOGGED_IN_KEY')) {
+  define( 'LOGGED_IN_KEY', getenv('WP_LOGGED_IN_KEY'));
+}
+else {
+  define( 'WP_MISSING_LOGGED_IN_KEY', true);
+}
+
+if (getenv('WP_NONCE_KEY')) {
+  define( 'NONCE_KEY', getenv('WP_NONCE_KEY'));
+}
+else {
+  define( 'WP_MISSING_NONCE_KEY', true);
+}
+
+if (getenv('WP_AUTH_SALT')) {
+  define( 'AUTH_SALT', getenv('WP_AUTH_SALT'));
+}
+else {
+  define( 'WP_MISSING_AUTH_SALT', true);
+}
+
+if (getenv('WP_SECURE_AUTH_SALT')) {
+  define( 'SECURE_AUTH_SALT', getenv('WP_SECURE_AUTH_SALT'));
+}
+else {
+  define( 'WP_MISSING_SECURE_AUTH_SALT', true);
+}
+
+if (getenv('WP_LOGGED_IN_SALT')) {
+  define( 'LOGGED_IN_SALT', getenv('WP_LOGGED_IN_SALT'));
+}
+else {
+  define( 'WP_MISSING_LOGGED_IN_SALT', true);
+}
+
+if (getenv('WP_NONCE_SALT')) {
+  define( 'NONCE_SALT', getenv('WP_NONCE_SALT'));
+}
+else {
+  define( 'WP_MISSING_NONCE_SALT', true);
+}
 
 /**#@-*/
 
