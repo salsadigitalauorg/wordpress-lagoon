@@ -15,7 +15,7 @@ if (getenv('LAGOON_ENVIRONMENT') == 'production' || getenv('LAGOON_ENVIRONMENT')
 }
 
 // Increase memory limit.
-define('WP_MEMORY_LIMIT','400M');
+define('WP_MEMORY_LIMIT', getenv('WP_MEMORY_LIMIT') ?: '400M');
 
 // Disable FTP.
 define('FS_METHOD', 'direct');
