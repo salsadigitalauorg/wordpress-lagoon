@@ -57,10 +57,10 @@
     "wpackagist-plugin/lumturio-wp-monitor": "^1.0",
     "wpackagist-plugin/redirection": "^5.3",
     "wpackagist-plugin/site-offline": "^1.4",
-    "wpackagist-plugin/wordpress-seo": "^20.0",
+    "wpackagist-plugin/wordpress-seo": "^21.0",
     "wpackagist-plugin/wp-accessibility": "^2.0",
     "wpackagist-plugin/wp-smushit": "^3.9",
-    "wpackagist-theme/twentytwentytwo": "^1.2"
+    "wpackagist-theme/twentytwenty": "^2.2"
   },
   "require-dev": {
     "aaemnnosttv/wp-cli-dotenv-command": "^2.0",
@@ -91,6 +91,12 @@
     }
   },
   "scripts": {
+    "post-install-cmd": [
+      "/bin/cp -pf .docker/wordpress/wp-config.php web/wp/"
+    ],
+    "post-update-cmd": [
+      "/bin/cp -pf .docker/wordpress/wp-config.php web/wp/"
+    ],
     "post-root-package-install": [
       "php -r \"copy('.env.default', '.env');\""
     ],

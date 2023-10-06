@@ -47,8 +47,10 @@ commands:
     cmd: |
       echo "Installing a vanilla Wordpress site as $LOCALDEV_URL"
       docker-compose exec -T cli \
+              composer install --no-dev -n --prefer-dist --working-dir=/app
+      docker-compose exec -T cli \
         wp db reset --yes \
-          --path=/app/web/wp \
+          --path=/app/${WEBROOT}/wp \
           --url=$LOCALDEV_URL \
           --allow-root
       docker-compose exec -T cli \
@@ -59,8 +61,8 @@ commands:
         --admin_user=admin \
         --admin_email=admin@example.com \
         --skip-email \
-        --path=/app/web/wp
-      ahoy wp theme activate twentytwenty
+        --path=/app/${WEBROOT}/wp
+      ahoy wp theme activate twentytwenty --path=/app/${WEBROOT}/wp
 
   cli:
     usage: Start a shell inside TEST container.
