@@ -47,8 +47,8 @@ elseif (!empty(getenv('LAGOON_ROUTE'))) {
 }
 define ('WPCF7_LOAD_JS', false);
 
-define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
-define('WP_PLUGIN_DIR', dirname( __FILE__ ) . '/content/plugins' );
+define('WP_CONTENT_DIR', '/app/' . getenv('WEBROOT') . '/content');
+define('WP_PLUGIN_DIR', '/app/' . getenv('WEBROOT') . '/content/plugins' );
 define('WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins');
 define('WPMU_PLUGIN_URL', WP_CONTENT_URL . '/mu-plugins' );
 
@@ -211,15 +211,6 @@ define( 'WP_DEBUG_DISPLAY', false );
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
-
-define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
-$schema = !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
-$http_host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('LAGOON_PRODUCTION_URL');
-define('WP_CONTENT_URL', $schema . $http_host . '/content');
-
-// Must-use plugins directory.
-define('WPMU_PLUGIN_DIR', '/app/web/content/mu-plugins');
-define('WPMU_PLUGIN_URL', $schema . $http_host . '/content/mu-plugins');
 
 // Disable Wordpress core update
 define( 'WP_AUTO_UPDATE_CORE', false );
