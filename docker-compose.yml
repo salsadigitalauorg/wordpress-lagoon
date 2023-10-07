@@ -11,6 +11,9 @@ x-volumes:
       - .:/app:delegated
       - uploads:/app/web/content/uploads
 
+x-image-version: &image-version
+  ${IMAGE_VERSION:-latest}
+
 x-environment:
   &default-environment
     LAGOON_PROJECT: *lagoon-project
@@ -64,6 +67,9 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile.php
+      args:
+        CLI_IMAGE: *lagoon-project
+        IMAGE_VERSION: *image-version
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon

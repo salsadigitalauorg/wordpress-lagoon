@@ -1,4 +1,4 @@
-FROM uselagoon/php-8.0-cli
+FROM uselagoon/php-8.1-cli
 
 RUN apk add --no-cache tzdata
 
