@@ -2,7 +2,7 @@ ARG CLI_IMAGE
 
 FROM ${CLI_IMAGE} as cli
 
-FROM uselagoon/php-8.1-fpm:latest
+FROM uselagoon/php-8.2-fpm:latest
 
 RUN apk add --no-cache tzdata
 
