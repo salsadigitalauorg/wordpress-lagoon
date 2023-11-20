@@ -1,6 +1,6 @@
 # WordPress Composer image to work with Amazee.io platform
 
-Visit https://hub.docker.com/r/salsadigital/wordpress-lagoon-cli/tags to 
+Visit https://hub.docker.com/r/salsadigitalau/wordpress-lagoon/tags to 
 download the latest image.
 
 ## Build local images
@@ -9,17 +9,17 @@ download the latest image.
 
 `delete composer.lock` file. Commit.
 
-`docker image build . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:[tag]`
+`docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
-`docker image build . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:latest`
+`docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
 
 ## Push image to Dockerhub
-Login to docker first, ensure salsadigital/wordpress-lagoon-cli project
+Login to docker first, ensure salsadigitalau/wordpress-lagoon project
 has you listed in the access group.
 
-`docker push salsadigital/wordpress-lagoon-cli:[tag]`
+`docker push salsadigitalau/wordpress-lagoon:[tag]`
 
-`docker push salsadigital/wordpress-lagoon-cli:latest`
+`docker push salsadigitalau/wordpress-lagoon:latest`
 
 ## Supported environment variables
 
