@@ -4,7 +4,11 @@ FROM ${CLI_IMAGE} as cli
 
 FROM uselagoon/php-8.2-fpm:latest
 
-RUN apk add --no-cache tzdata
+RUN apk update \
+    && apk add --no-cache \
+    php-exif \
+    php-mbstring \
+    tzdata
 
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
