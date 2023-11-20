@@ -1,4 +1,4 @@
-FROM salsadigital/wordpress-lagoon-cli:latest as builder
+FROM salsadigitalau/wordpress-lagoon:latest as builder
 
 FROM uselagoon/nginx:latest
 
