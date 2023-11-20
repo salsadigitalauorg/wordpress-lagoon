@@ -1,6 +1,10 @@
 FROM uselagoon/php-8.1-cli:latest
 
-RUN apk add --no-cache tzdata
+RUN apk update \
+    && apk add --no-cache \
+    php-exif \
+    php-mbstring \
+    tzdata
 
 COPY composer.* wp.json project.json /app/
 COPY .docker/wordpress/wp-config.php /app/.docker/wordpress/wp-config.php
