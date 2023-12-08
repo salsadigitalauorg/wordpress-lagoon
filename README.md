@@ -11,6 +11,8 @@ download the latest image.
 
 `docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
+`docker image rm salsadigitalau/wordpress-lagoon:latest`
+
 `docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
 
 ## Push image to Dockerhub
