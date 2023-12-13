@@ -9,11 +9,11 @@ download the latest image.
 
 `rm -f composer.lock` delete composer.lock file. Commit.
 
-`docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
 `docker image rm salsadigitalau/wordpress-lagoon:latest`
 
-`docker image build . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
+`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
 
 ## Push image to Dockerhub
 Login to docker first, ensure salsadigitalau/wordpress-lagoon project
