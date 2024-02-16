@@ -7,8 +7,6 @@ download the latest image.
 
 `composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update`
 
-`rm -f composer.lock` delete composer.lock file. Commit.
-
 `docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
 ## Push image to Dockerhub
@@ -16,8 +14,6 @@ Login to docker first, ensure salsadigitalau/wordpress-lagoon project
 has you listed in the access group.
 
 `docker push salsadigitalau/wordpress-lagoon:[tag]`
-
-`docker push salsadigitalau/wordpress-lagoon:latest`
 
 ## Supported environment variables
 
