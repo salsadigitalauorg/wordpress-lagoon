@@ -26,12 +26,9 @@
       "separateMinorPatch": false,
       "matchPackagePatterns": [".*"],
       "excludePackageNames": [
-        "wpackagist-plugin/image-elevator",
-        "wpackagist-plugin/redirection",
-        "wpackagist-plugin/site-offline",
-        "wpackagist-plugin/wordpress-seo",
-        "wpackagist-plugin/wp-accessibility",
-        "wpackagist-plugin/wp-smushit"
+        "roots/wordpress",
+        "roots/wp-password-bcrypt",
+        "roots/wp-config"
       ]
     },
     {
