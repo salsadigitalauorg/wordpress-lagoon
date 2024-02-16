@@ -7,8 +7,6 @@ download the latest image.
 
 `composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update`
 
-`rm -f composer.lock` delete composer.lock file. Commit.
-
 `docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
 `docker image rm salsadigitalau/wordpress-lagoon:latest`
