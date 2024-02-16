@@ -1,0 +1,75 @@
+{
+  "extends": ["config:base"],
+  "branchPrefix": "deps/",
+  "labels": ["dependencies"],
+  "assignees": [],
+  "ignorePresets": [":prHourlyLimit2"],
+  "rangeStrategy": "update-lockfile",
+  "timezone": "Australia/Melbourne",
+  "enabledManagers": ["composer", "dockerfile", "docker-compose", "github-actions"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["php"],
+      "enabled": false
+    },
+    {
+      "groupName": "Major all - skipped to update manually",
+      "matchDatasources": ["packagist"],
+      "matchUpdateTypes": ["major"],
+      "matchPackagePatterns": [".*"],
+      "enabled": false
+    },
+    {
+      "groupName": "Minor and Patch Contrib",
+      "groupSlug": "wordpress-minor-patch-contrib",
+      "matchDatasources": ["wpackagist"],
+      "separateMinorPatch": false,
+      "matchPackagePatterns": [".*"],
+      "excludePackageNames": [
+        "wpackagist-plugin/image-elevator",
+        "wpackagist-plugin/redirection",
+        "wpackagist-plugin/site-offline",
+        "wpackagist-plugin/wordpress-seo",
+        "wpackagist-plugin/wp-accessibility",
+        "wpackagist-plugin/wp-smushit"
+      ]
+    },
+    {
+      "groupName": "Minor and Patch Core",
+      "groupSlug": "wordpress-minor-patch-core",
+      "schedule": ["before 2am"],
+      "matchDatasources": ["wpackagist"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchPackageNames": [
+        "roots/wordpress",
+        "roots/wp-password-bcrypt",
+        "roots/wp-config"
+      ]
+    },
+    {
+      "groupName": "Docker images excluded",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchPackageNames": [
+        "selenium/standalone-chrome",
+        "seleniarm/standalone-chromium"
+      ],
+      "enabled": false
+    },
+    {
+      "groupName": "Docker images",
+      "groupSlug": "docker",
+      "schedule": ["before 3am"],
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "excludePackageNames": [
+        "selenium/standalone-chrome",
+        "seleniarm/standalone-chromium"
+      ]
+    },
+    {
+      "groupName": "GitHub Actions",
+      "groupSlug": "github-actions",
+      "schedule": ["before 3am"],
+      "matchManagers": ["github-actions"]
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+#:
+#: CircleCI 2.0 configuration file.
+#:
+#: This configuration file uses the "docker" executor. A "runner" container,
+#: created from a specified Docker image, is used to checkout source code and
+#: run commands defined in this file. Application Docker containers defined in
+#: docker-compose.yml run on a *remote* Docker server controlled by CircleCI.
+#: The "runner" container uses Docker client to control the remote Docker server.
+#;
+#; Comments starting with '#:' provide explicit documentation and will be
+#; automatically removed during installation or update of DrevOps if an option
+#; is selected.
+#;
+#; Comments starting with '#;<' and '#;>' are internal DrevOps comments
+#; and will be removed during installation or update of DrevOps.
+version: '2.1'
+
+################################################################################
+# VARIABLES
+################################################################################
+#: For YAML support of anchors and references, see http://blog.daemonl.com/2016/02/yaml.html
+
+aliases:
+  #-----------------------------------------------------------------------------
+  # Per-project variables.
+  #-----------------------------------------------------------------------------
+
+  #;< !PROVISION_USE_PROFILE
+  # SSH key fingerprint to download the database.
+  #: Generate a separate SSH key for a user who has permissions to download the
+  #: database from the production environment and it under "SSH Permissions" in
+  #: CircleCI UI.
+  #:
+  #: Example command to generate SSH key:
+  #: ssh-keygen -m PEM -t rsa -C "deployer@example.com"
+  #:
+  #: This is a fingerprint of the key to test DrevOps project itself as an example.
+  #: Replace this key fingerprint with your own and remove this comment.
+  - &db_ssh_fingerprint "56:f3:3f:51:c3:8f:b3:75:01:90:6e:26:48:e7:48:e1"
+  #;> !PROVISION_USE_PROFILE
+
+  # SSH key fingerprint to deploy code.
+  #: Generate a separate SSH key for a user who has permissions to perform a
+  #: deployment and add it under "SSH Permissions" in CircleCI UI.
+  #:
+  #: Example command to generate SSH key:
+  #: ssh-keygen -m PEM -t rsa -C "deployer@example.com"
+  #:
+  #: This is a fingerprint of the key to push DrevOps project itself as an example.
+  #: Replace this key fingerprint with your own and remove this comment.
+  - &deploy_ssh_fingerprint "56:f3:3f:51:c3:8f:b3:75:01:90:6e:26:48:e7:48:e1"
+
+  # Timezone of the runner container to ensure that DB cache key uses correct date.
+  # @see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  # Replace this timezone with your own.
+  - &timezone "Australia/Melbourne"
+
+  # Number of parallel jobs to run. Applies to 'build' job only.
+  - &parallelism 2
+
+  #;< RENOVATEBOT
+  # Make sure that correct repository is specified or bot will go
+  # through all repositories that a RENOVATE_TOKEN token has access to.
+  #;< DREVOPS_DEV
+  - &renovatebot_repository 'salsadigitalauorg/wordpress-lagoon'
+  #;> DREVOPS_DEV
+  ##### - &renovatebot_repository 'your_org/your_site'
+  # The author details to use for commits made by RenovateBot.
+  - &renovatebot_git_author 'RenovateBot Self Hosted <renovatebot@your-site-url.example>'
+  # The schedule to run RenovateBot on. Defaults to running twice a day.
+  - &renovatebot_schedule "5 11,23 * * *"
+  # Set to 'false' (without single quotes) once the setup is complete and
+  # the bot ran at least once without errors.
+  - &renovatebot_dry_run true
+  # The branch to run RenovateBot on.
+  - &renovatebot_branch master
+  #;> RENOVATEBOT
+
+  #-----------------------------------------------------------------------------
+  # Optional variables.
+  #-----------------------------------------------------------------------------
+
+  # CI runner resource class.
+  # @see https://circleci.com/docs/2.0/configuration-reference/#resource_class
+  # Change to 'large' for faster builds.
+  - &resource_class medium
+
+  # Docker Layer Caching allows to significantly speed up builds by caching
+  # images built during previous runs.
+  # @see https://circleci.com/docs/2.0/docker-layer-caching/
+  # Change to 'true' (without single quotes) to enable.
+  - &docker_layer_caching false
+
+  #:-----------------------------------------------------------------------------
+
+  #: Shared runner container configuration applied to each job.
+  - &runner_config
+    #: Location of the checked-out files within the "runner" container.
+    working_directory: &working_directory ~/project
+    docker:
+      # Using the 'runner' container where each job will be executed.
+      # This container has all the necessary tools to run a dockerized environment.
+      # @see https://github.com/drevops/ci-runner
+      # @see https://hub.docker.com/repository/docker/drevops/ci-runner/tags?page=1&ordering=last_updated
+      - image: drevops/ci-runner:24.1.0
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+        environment:
+          # Set runner timezone to ensure that executed operations use correct timestamps.
+          TZ: *timezone
+          # Set runner terminal capabilities.
+          TERM: xterm-256color
+          # Directory to store test results.
+          DREVOPS_CI_TEST_RESULTS: &test_results /tmp/tests
+          # Directory to store test artifacts.
+          DREVOPS_CI_ARTIFACTS: &artifacts /tmp/artifacts
+          # Check only minimal stack requirements.
+          DREVOPS_DOCTOR_CHECK_MINIMAL: 1
+          # Directory to store code exported between jobs.
+          DREVOPS_EXPORT_CODE_DIR: &drevops_build_export_dir /tmp/workspace/code
+          # Directory to use for artifact deployments.
+          DREVOPS_DEPLOY_ARTIFACT_SRC: *drevops_build_export_dir
+          # Source code location for artifact deployments.
+          DREVOPS_DEPLOY_ARTIFACT_ROOT: *working_directory
+          # Report file location for artifact deployments.
+          DREVOPS_DEPLOY_ARTIFACT_REPORT_FILE: /tmp/artifacts/deployment_report.txt
+    resource_class: *resource_class
+
+  # Set up remote Docker.
+  - &step_setup_remote_docker
+    setup_remote_docker:
+      docker_layer_caching: *docker_layer_caching
+      version: default
+
+  # Set up Docker network.
+  - &step_setup_docker_network
+    run: docker network prune -f >/dev/null 2>&1 && docker network inspect amazeeio-network >/dev/null 2>&1 || docker network create amazeeio-network >/dev/null 2>&1 || true
+
+  # Process the codebase to be run in CI environment.
+  - &step_process_codebase
+    run:
+      name: Process codebase to run in CI
+      command: |
+        find . -name "docker-compose.yml" -print0 | xargs -0 -I {} sh -c "sed -i -e ''/###/d'' {} && sed -i -e ''s/##//'' {}"
+        mkdir -p /tmp/workspace/code
+
+################################################################################
+# JOBS
+################################################################################
+
+jobs:
+  #;< RENOVATEBOT
+  # Self-hosted RenovateBot.
+  # Add RENOVATE_TOKEN as an environment variable with GitHub access token in UI.
+  renovatebot-self-hosted:
+    docker:
+      - image: renovate/renovate:36.108.0
+        environment:
+          RENOVATE_PLATFORM: 'github'
+          RENOVATE_AUTODISCOVER: false
+          RENOVATE_DEPENDENCY_DASHBOARD: true
+          RENOVATE_DEPENDENCY_DASHBOARD_TITLE: 'RenovateBot Dependency Dashboard (self-hosted)'
+          RENOVATE_REPOSITORIES: *renovatebot_repository
+          RENOVATE_GIT_AUTHOR: *renovatebot_git_author
+          RENOVATE_DRY_RUN: *renovatebot_dry_run
+          LOG_LEVEL: debug
+    steps:
+      - checkout
+      - run: renovate-config-validator
+      - run: renovate
+  #;> RENOVATEBOT
+
+################################################################################
+# WORKFLOWS
+################################################################################
+
+workflows:
+  version: 2
+  #;< RENOVATEBOT
+  # Self-hosted Renovatebot workflow.
+  renovatebot-self-hosted:
+    triggers:
+      - schedule:
+          cron: *renovatebot_schedule
+          filters:
+            branches:
+              only:
+                - *renovatebot_branch
+    jobs:
+      - renovatebot-self-hosted
+  #;> RENOVATEBOT
