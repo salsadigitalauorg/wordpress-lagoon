@@ -25,6 +25,31 @@ aliases:
   # Per-project variables.
   #-----------------------------------------------------------------------------
 
+  #;< !PROVISION_USE_PROFILE
+  # SSH key fingerprint to download the database.
+  #: Generate a separate SSH key for a user who has permissions to download the
+  #: database from the production environment and it under "SSH Permissions" in
+  #: CircleCI UI.
+  #:
+  #: Example command to generate SSH key:
+  #: ssh-keygen -m PEM -t rsa -C "deployer@example.com"
+  #:
+  #: This is a fingerprint of the key to test DrevOps project itself as an example.
+  #: Replace this key fingerprint with your own and remove this comment.
+  - &db_ssh_fingerprint "56:f3:3f:51:c3:8f:b3:75:01:90:6e:26:48:e7:48:e1"
+  #;> !PROVISION_USE_PROFILE
+
+  # SSH key fingerprint to deploy code.
+  #: Generate a separate SSH key for a user who has permissions to perform a
+  #: deployment and add it under "SSH Permissions" in CircleCI UI.
+  #:
+  #: Example command to generate SSH key:
+  #: ssh-keygen -m PEM -t rsa -C "deployer@example.com"
+  #:
+  #: This is a fingerprint of the key to push DrevOps project itself as an example.
+  #: Replace this key fingerprint with your own and remove this comment.
+  - &deploy_ssh_fingerprint "56:f3:3f:51:c3:8f:b3:75:01:90:6e:26:48:e7:48:e1"
+
   # Timezone of the runner container to ensure that DB cache key uses correct date.
   # @see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   # Replace this timezone with your own.
