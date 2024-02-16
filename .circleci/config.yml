@@ -125,6 +125,26 @@ aliases:
 ################################################################################
 
 jobs:
+  # Build and test is a first step of the build. The testing is performed
+  # within the same job to save time on provisioning during the job.
+  build: &job_build
+    <<: *runner_config
+    parallelism: *parallelism
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - *step_process_codebase
+      - *step_setup_remote_docker
+      - *step_setup_docker_network
+      - run:
+          name: Build site
+          command: ./scripts/drevops/build.sh
+          no_output_timeout: 30m
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - code
   #;< RENOVATEBOT
   # Self-hosted RenovateBot.
   # Add RENOVATE_TOKEN as an environment variable with GitHub access token in UI.
