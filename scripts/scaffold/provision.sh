@@ -71,6 +71,8 @@ provision_from_wp_profile() {
 
 echo
 
+provision_from_wp_profile
+
 # Run custom provision scripts.
 # The files should be located in "./scripts/custom/" directory
 # and must have "provision-" prefix and ".sh" extension.
@@ -88,8 +90,6 @@ if [ -d "./scripts/custom" ]; then
   done
   unset file
 fi
-
-provision_from_wp_profile
 
 info "Finished site provisioning."
 

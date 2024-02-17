@@ -50,7 +50,7 @@ echo
 
 # Create an array of Docker Compose CLI options for 'exec' command as a shorthand.
 # $DREVOPS_*, $COMPOSE_* and $TERM variables will be passed to containers.
-dcopts=(-T) && while IFS='' read -r line; do dcopts+=("${line}"); done < <(env | cut -f1 -d= | grep "TERM\|COMPOSE_\|GITHUB_\|DOCKER_\DRUPAL_\|DREVOPS_" | sed 's/^/-e /')
+dcopts=(-T) && while IFS='' read -r line; do dcopts+=("${line}"); done < <(env | cut -f1 -d= | grep "TERM\|COMPOSE_\|GITHUB_\|DOCKER_\DRUPAL_\|DREVOPS_\|COMPOSE_\|LAGOON_\|WEBROOT\|WP_\|MARIADB_" | sed 's/^/-e /')
 
 info "Validating Docker Compose configuration."
 docker compose config -q && pass "Docker Compose configuration is valid." || { fail "Docker Compose configuration is invalid." && exit 1; }
