@@ -123,7 +123,7 @@ echo
 # Provision site.
 # Pass environment variables to the container from the environment.
 note "Installing new Wordpress site"
-docker compose exec ${dcopts[@]} cli bash -c "./scripts/scaffold/provision.sh"
+docker compose exec ${dcopts[@]} cli bash -c "/app/scripts/scaffold/provision.sh"
 echo
 
 # Check that the site is available.
