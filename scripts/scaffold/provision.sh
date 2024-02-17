@@ -59,11 +59,11 @@ provision_from_wp_profile() {
 
   # Preparing the database
   echo "Resetting database..."
-  docker compose exec -T cli wp db reset --yes
+  wp db reset --yes --path=/app/web/wp --allow-root
 
   # Install WordPress
   echo "Installing website..."
-  docker compose exec -T cli wp core install --path=/app/web/wp --allow-root --url="${WORDPRESS_SITE_URL}" --title="${WORDPRESS_SITE_NAME}" --admin_user="admin" --admin_password="$(openssl rand -base64 12)" --admin_email="${WORDPRESS_ADMIN_EMAIL:-}"
+  wp core install --path=/app/web/wp --allow-root --url="${WORDPRESS_SITE_URL}" --title="${WORDPRESS_SITE_NAME}" --admin_user="admin" --admin_password="$(openssl rand -base64 12)" --admin_email="${WORDPRESS_ADMIN_EMAIL:-}"
 
 
   echo "WordPress site installed successfully."
@@ -94,7 +94,7 @@ provision_from_wp_profile
 info "Finished site provisioning."
 
 # Attempt to check WordPress installation status using WP-CLI
-if docker compose exec -T cli wp core is-installed --path=/app/web/wp --allow-root; then
+if wp core is-installed --path=/app/web/wp --allow-root; then
   echo "WordPress is installed."
 else
   echo "WordPress is not installed or there was an error checking the installation status."
