@@ -103,8 +103,11 @@ info "Installing development dependencies."
 #
 note "Copying development configuration files into container."
 docker compose cp -L .circleci cli:/app/ 2>"${composer_verbose_output}"
+docker compose cp -L .docker cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L composer.json cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L composer.lock cli:/app/ 2>"${composer_verbose_output}"
+docker compose cp -L wp.json cli:/app/ 2>"${composer_verbose_output}"
+docker compose cp -L project.json cli:/app/ 2>"${composer_verbose_output}"
 
 note "Installing all composer dependencies, including development ones."
 docker compose exec ${dcopts[@]} cli bash -c " \
