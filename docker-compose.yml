@@ -22,6 +22,10 @@ x-environment:
     # Uncomment if you like to have the system behave like in production
     LAGOON_ENVIRONMENT_TYPE: production
     LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD: ${LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD:-enabled}
+    MARIADB_DATABASE: ${MARIADB_DATABASE:-lagoon}
+    MARIADB_USERNAME: ${MARIADB_USERNAME:-lagoon}
+    MARIADB_PASSWORD: ${MARIADB_PASSWORD:-lagoon}
+    MARIADB_HOST: ${MARIADB_HOST:-mariadb}
     WEBROOT: ${WEBROOT:-web}
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     # XDEBUG_ENABLE: "true"
