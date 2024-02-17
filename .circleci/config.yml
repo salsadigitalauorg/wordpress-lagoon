@@ -139,7 +139,7 @@ jobs:
       - *step_setup_docker_network
       - run:
           name: Build site
-          command: ./scripts/drevops/build.sh
+          command: ./scripts/scaffold/build.sh
           no_output_timeout: 30m
       - persist_to_workspace:
           root: /tmp/workspace
