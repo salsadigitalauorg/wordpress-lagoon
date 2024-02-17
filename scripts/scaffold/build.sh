@@ -102,6 +102,7 @@ info "Installing development dependencies."
 # for production images), so we are installing them here.
 #
 note "Copying development configuration files into container."
+docker compose cp -L .env cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L scripts cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L .circleci cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L .docker cli:/app/ 2>"${composer_verbose_output}"
