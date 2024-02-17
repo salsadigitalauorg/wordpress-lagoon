@@ -102,6 +102,7 @@ info "Installing development dependencies."
 # for production images), so we are installing them here.
 #
 note "Copying development configuration files into container."
+docker compose cp -L scripts cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L .circleci cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L .docker cli:/app/ 2>"${composer_verbose_output}"
 docker compose cp -L composer.json cli:/app/ 2>"${composer_verbose_output}"
@@ -120,9 +121,9 @@ echo
 
 # Provision site.
 # Pass environment variables to the container from the environment.
-# @todo: modify this to install vanilla Wordpress site.
-#docker compose exec ${dcopts[@]} cli bash -c "./scripts/scaffold/provision.sh"
-#echo
+note "Installing new Wordpress site"
+docker compose exec ${dcopts[@]} cli bash -c "./scripts/scaffold/provision.sh"
+echo
 
 # Check that the site is available.
 ./scripts/scaffold/doctor.sh
