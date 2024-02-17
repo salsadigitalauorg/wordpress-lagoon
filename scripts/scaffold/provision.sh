@@ -54,30 +54,16 @@ info "Started site provisioning."
 # Check if provisioning should be skipped
 [ "${DREVOPS_PROVISION_SKIP:-0}" = "1" ] && pass "Skipped site provisioning as requested." && exit 0
 
-# Install WP-CLI if not already installed
-install_wp_cli() {
-  if ! command -v wp > /dev/null; then
-    echo "WP-CLI not found. Installing..."
-    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    chmod +x wp-cli.phar
-    sudo mv wp-cli.phar /usr/local/bin/wp
-    echo "WP-CLI installed successfully."
-  else
-    echo "WP-CLI is already installed."
-  fi
-}
-
 # Provision site from WordPress profile.
 provision_from_wp_profile() {
-  install_wp_cli
 
   # Preparing the database
   echo "Resetting database..."
-  wp db reset --yes --path=/app/web/wp --allow-root
+  ahoy wp db reset --yes
 
   # Install WordPress
   echo "Installing website..."
-  wp core install --path=/app/web/wp --allow-root --url="${WORDPRESS_SITE_URL}" --title="${WORDPRESS_SITE_NAME}" --admin_user="admin" --admin_password="$(openssl rand -base64 12)" --admin_email="${WORDPRESS_ADMIN_EMAIL:-}"
+  ahoy wp core install --path=/app/web/wp --allow-root --url="${WORDPRESS_SITE_URL}" --title="${WORDPRESS_SITE_NAME}" --admin_user="admin" --admin_password="$(openssl rand -base64 12)" --admin_email="${WORDPRESS_ADMIN_EMAIL:-}"
 
 
   echo "WordPress site installed successfully."
@@ -108,7 +94,7 @@ provision_from_wp_profile
 info "Finished site provisioning."
 
 # Attempt to check WordPress installation status using WP-CLI
-if wp core is-installed --path=/app/web/wp --allow-root; then
+if ahoy wp core is-installed --path=/app/web/wp --allow-root; then
   echo "WordPress is installed."
 else
   echo "WordPress is not installed or there was an error checking the installation status."

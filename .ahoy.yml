@@ -4,7 +4,7 @@ ahoyapi: v2
 commands:
   up:
     usage: Build project.
-    cmd: docker-compose up -d "$@"
+    cmd: docker compose up -d "$@"
 
   down:
     usage: Delete project (CAUTION).
@@ -22,15 +22,15 @@ commands:
   clean:
     usage: Stop Docker containers and remove container, images, volumes and networks.
     cmd: |
-      if [ -f "docker-compose.yml" ]; then
-        docker-compose down --volumes
+      if [ -f "docker compose.yml" ]; then
+        docker compose down --volumes
       fi
       rm -rf ./vendor
 
   build:
     usage: Build project.
     cmd: |
-      docker-compose up -d --build --force-recreate "$@"
+      docker compose up -d --build --force-recreate "$@"
 
   build-containers:
     usage: Build containers using dockerfiles.
@@ -46,14 +46,14 @@ commands:
     usage: Install a vanilla Wordpress site.
     cmd: |
       echo "Installing a vanilla Wordpress site as $LOCALDEV_URL"
-      docker-compose exec -T cli \
+      docker compose exec -T cli \
               composer install --no-dev -n --prefer-dist --working-dir=/app
-      docker-compose exec -T cli \
+      docker compose exec -T cli \
         wp db reset --yes \
           --path=/app/${WEBROOT}/wp \
           --url=$LOCALDEV_URL \
           --allow-root
-      docker-compose exec -T cli \
+      docker compose exec -T cli \
         wp core install \
         --allow-root \
         --url=$LOCALDEV_URL \
@@ -66,15 +66,15 @@ commands:
 
   cli:
     usage: Start a shell inside TEST container.
-    cmd: docker-compose exec cli bash
+    cmd: docker compose exec cli bash
 
   run:
     usage: Run command inside TEST container.
-    cmd: docker-compose exec -T cli bash -c "$@"
+    cmd: docker compose exec -T cli bash -c "$@"
 
   wp:
     usage: Run wp-cli commands in TEST container.
-    cmd: docker-compose exec -T cli wp --allow-root --path=/app/web/wp "$@"
+    cmd: docker compose exec -T cli wp --allow-root --path=/app/web/wp "$@"
 
   composer:
     usage: Runs composer inside conainer
@@ -82,38 +82,38 @@ commands:
 
   logs:
     usage: Show Docker logs.
-    cmd: docker-compose logs "$@"
+    cmd: docker compose logs "$@"
 
   ps:
     usage: List running Docker containers.
-    cmd: docker-compose ps | grep ${COMPOSE_PROJECT_NAME}
+    cmd: docker compose ps | grep ${COMPOSE_PROJECT_NAME}
 
   restart:
     usage: Restart Docker containers.
-    cmd: docker-compose restart
+    cmd: docker compose restart
 
   stop:
     usage: Stop Docker containers.
-    cmd: docker-compose stop "$@"
+    cmd: docker compose stop "$@"
 
   mysql-import:
     usage: Pipe in a sql file.  `ahoy mysql-import local.sql`
     cmd: |
       if [ -e "$@" ] ; then
-        docker-compose exec cli bash -c 'wp --path=/app/web/wp db reset --yes' &&
-        docker-compose exec -T cli bash -c 'wp --path=/app/web/wp db query' < "$@" &&
-        docker-compose exec -T cli bash -c 'wp --path=/app/web/wp option update blogname "$COMPOSE_PROJECT_NAME $LAGOON_ENVIRONMENT_TYPE"'
+        docker compose exec cli bash -c 'wp --path=/app/web/wp db reset --yes' &&
+        docker compose exec -T cli bash -c 'wp --path=/app/web/wp db query' < "$@" &&
+        docker compose exec -T cli bash -c 'wp --path=/app/web/wp option update blogname "$COMPOSE_PROJECT_NAME $LAGOON_ENVIRONMENT_TYPE"'
       else
         echo "Provided sql file" "$@" "does not exist"
       fi
 
   mysql-dump:
     usage: Dump data out into a file. `ahoy wp db export local.sql"`
-    cmd: docker-compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp "$@"'
+    cmd: docker compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp "$@"'
 
   backup:
     usage: Backup database into the persistent volume content/uploads/backups
-    cmd: docker-compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp - | gzip > /app/web/content/uploads/backups/pre-deploy-backup-`date +%Y-%m-%d-%T`.db.sql.gz'
+    cmd: docker compose exec cli bash -c 'wp db export --add-drop-table --path=/app/web/wp - | gzip > /app/web/content/uploads/backups/pre-deploy-backup-`date +%Y-%m-%d-%T`.db.sql.gz'
 
   refresh-db:
     usage: Loads database files from .data/db.sql and imports into container
