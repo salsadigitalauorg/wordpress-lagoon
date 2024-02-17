@@ -172,6 +172,12 @@ jobs:
 
 workflows:
   version: 2
+  commit:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
   #;< RENOVATEBOT
   # Self-hosted Renovatebot workflow.
   renovatebot-self-hosted:
