@@ -36,16 +36,21 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.cli
     image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
-    labels:
-      # Lagoon Labels
-      lagoon.type: cli-persistent
-      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/content/uploads/ # location where the persistent storage should be mounted
-    << : *default-volumes # loads the defined volumes from the top
-    volumes_from: # mount the ssh-agent from the pygmy or cachalot ssh-agent
-      - container:amazeeio-ssh-agent
+    <<: *default-volumes
+    user: root
     environment:
-      << : *default-environment # loads the defined environment variables from the top
+      <<: *default-environment
+    # Mount volumes from the ssh-agent running in Pygmy to inject host SSH key into container. See https://pygmy.readthedocs.io/en/master/ssh_agent/
+    volumes_from: ### Local overrides to mount host SSH keys. Automatically removed in CI.
+      - container:amazeeio-ssh-agent ### Local overrides to mount host SSH keys. Automatically removed in CI.
+    ports:
+      - "35729" # Livereload port in container. Find port on host with `ahoy info` or `docker compose port cli 35729`.
+    #;< LAGOON
+    labels:
+      lagoon.type: cli-persistent # See https://docs.lagoon.sh/using-lagoon-advanced/service-types/
+      lagoon.persistent.name: &lagoon-nginx-name nginx-php # Mount the persistent storage of nginx-php pod into this container.
+      lagoon.persistent: &lagoon-persistent-files /app/web/sites/default/files/  # Location where the persistent storage should be mounted.
+    #;> LAGOON
 
   nginx:
     build:
