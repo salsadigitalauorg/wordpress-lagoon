@@ -37,19 +37,19 @@ WORDPRESS_SITE_URL="${LOCALDEV_URL:-http://example.com}"
 WP_DB_DUMP_FILE="${WP_DB_DUMP_FILE:-db.sql}"
 
 # Mariadb database name.
-MARIADB_DATABASE: ${MARIADB_DATABASE:-lagoon}
+MARIADB_DATABASE="${MARIADB_DATABASE:-lagoon}"
 
 # Mariadb user name.
-MARIADB_USERNAME: ${MARIADB_USERNAME:-lagoon}
+MARIADB_USERNAME="${MARIADB_USERNAME:-lagoon}"
 
 # Mariadb password.
-MARIADB_PASSWORD: ${MARIADB_PASSWORD:-lagoon}
+MARIADB_PASSWORD="${MARIADB_PASSWORD:-lagoon}"
 
 # Mariadb host.
-MARIADB_HOST: ${MARIADB_HOST:-mariadb}
+MARIADB_HOST="${MARIADB_HOST:-mariadb}"
 
 # Webroot directory.
-WEBROOT: ${WEBROOT:-web}
+WEBROOT="${WEBROOT:-web}"
 
 # ------------------------------------------------------------------------------
 
@@ -74,11 +74,11 @@ provision_from_wp_profile() {
 
   # Preparing the database
   info "Resetting database..."
-  wp db reset --yes --path=/app/${WEBROOT}/wp --allow-root
+  docker compose exec ${dcopts[@]} cli bash -c "wp db reset --yes --path=/app/${WEBROOT}/wp --allow-root"
 
   # Install WordPress
   info "Installing website..."
-  wp core install --path=/app/${WEBROOT}/wp --allow-root --url="${WORDPRESS_SITE_URL}" --title="${WORDPRESS_SITE_NAME}" --admin_user="admin" --admin_password="$(openssl rand -base64 12)" --admin_email="${WORDPRESS_ADMIN_EMAIL}"
+  docker compose exec ${dcopts[@]} cli bash -c "wp core install --path=/app/${WEBROOT}/wp --allow-root --url=${WORDPRESS_SITE_URL} --title=${WORDPRESS_SITE_NAME} --admin_user=admin --admin_password=$(openssl rand -base64 12) --admin_email=${WORDPRESS_ADMIN_EMAIL}"
 
 
   pass "WordPress site installed successfully."
@@ -109,8 +109,9 @@ fi
 info "Finished site provisioning."
 
 # Attempt to check WordPress installation status using WP-CLI
-if wp core is-installed --path=/app/${WEBROOT}/wp --allow-root; then
+if docker compose exec ${dcopts[@]} cli bash -c "wp core is-installed --path=/app/${WEBROOT}/wp --allow-root"; then
   echo "WordPress is installed."
 else
   echo "WordPress is not installed or there was an error checking the installation status."
+  exit 1
 fi

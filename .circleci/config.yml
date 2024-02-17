@@ -141,6 +141,10 @@ jobs:
           name: Build site
           command: ./scripts/scaffold/build.sh
           no_output_timeout: 30m
+      - run:
+          name: Install site
+          command: ./scripts/scaffold/provision.sh
+          no_output_timeout: 30m
       - persist_to_workspace:
           root: /tmp/workspace
           paths:

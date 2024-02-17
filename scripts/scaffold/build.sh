@@ -120,12 +120,6 @@ docker compose exec ${dcopts[@]} cli bash -c " \
 pass "Installed development dependencies."
 echo
 
-# Provision site.
-# Pass environment variables to the container from the environment.
-note "Installing new Wordpress site"
-docker compose exec ${dcopts[@]} cli bash -c "/app/scripts/scaffold/provision.sh"
-echo
-
 # Check that the site is available.
 ./scripts/scaffold/doctor.sh
 
