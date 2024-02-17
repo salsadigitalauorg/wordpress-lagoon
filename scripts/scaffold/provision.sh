@@ -37,19 +37,19 @@ WORDPRESS_SITE_URL="${LOCALDEV_URL:-http://example.com}"
 WP_DB_DUMP_FILE="${WP_DB_DUMP_FILE:-db.sql}"
 
 # Mariadb database name.
-MARIADB_DATABASE: ${MARIADB_DATABASE:-lagoon}
+MARIADB_DATABASE="${MARIADB_DATABASE:-lagoon}"
 
 # Mariadb user name.
-MARIADB_USERNAME: ${MARIADB_USERNAME:-lagoon}
+MARIADB_USERNAME="${MARIADB_USERNAME:-lagoon}"
 
 # Mariadb password.
-MARIADB_PASSWORD: ${MARIADB_PASSWORD:-lagoon}
+MARIADB_PASSWORD="${MARIADB_PASSWORD:-lagoon}"
 
 # Mariadb host.
-MARIADB_HOST: ${MARIADB_HOST:-mariadb}
+MARIADB_HOST="${MARIADB_HOST:-mariadb}"
 
 # Webroot directory.
-WEBROOT: ${WEBROOT:-web}
+WEBROOT="${WEBROOT:-web}"
 
 # ------------------------------------------------------------------------------
 
