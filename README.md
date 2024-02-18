@@ -30,6 +30,12 @@ has you listed in the access group.
 
 `docker push salsadigitalau/wordpress-lagoon:[tag]`
 
+### Revert to default builder
+
+To avoid problems with new builder on Apple-silicon macs, reset the builder to default:
+
+`docker context use default`
+
 ## Supported environment variables
 
 Rever to the wp-config.php file to see how they are being used.
