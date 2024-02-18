@@ -5,9 +5,24 @@ download the latest image.
 
 ## Build local images
 
+`rm -Rf vendor`
+
 `composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update`
 
+**Tagging images**
+`[tag]` syntax as follows: `{wordpress-full-version}_php-{php-minor-version}`. Example: `6.4.3_php-8.2` - this tag reflects
+Wordpress version 6.4.3 and PHP version 8.2.
+
+### Using Intel host (e.g. Intel-based mac)
+
 `docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+
+### Using Apple-silicon host (e.g. M-cip-based mac)
+`docker buildx create --name mybuilder --use`
+
+`docker buildx inspect --bootstrap`
+
+`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
 ## Push image to Dockerhub
 Login to docker first, ensure salsadigitalau/wordpress-lagoon project
