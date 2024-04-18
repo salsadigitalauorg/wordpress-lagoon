@@ -1,6 +1,6 @@
 # WordPress Composer image to work with Amazee.io platform
 
-Visit https://hub.docker.com/r/salsadigitalau/wordpress-lagoon/tags to 
+Visit https://hub.docker.com/r/salsadigital/wordpress-lagoon-cli/tags to 
 download the latest image.
 
 ## Build local images
@@ -25,6 +25,12 @@ Wordpress version 6.4.3 and PHP version 8.1.
 
 `docker buildx inspect --bootstrap`
 
+Pull the access details, including the Docker Hub username and your personal access token.
+
+`docker login --username <your-username> --password <your-access-token>`
+
+The following command will build and push the images:
+
 `docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
 
 `docker image rm salsadigitalau/wordpress-lagoon:latest`
@@ -32,6 +38,8 @@ Wordpress version 6.4.3 and PHP version 8.1.
 `docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
 
 ## Push image to Dockerhub
+(If you did not login in the previous steps above)
+
 Login to docker first, ensure salsadigitalau/wordpress-lagoon project
 has you listed in the access group.
 
