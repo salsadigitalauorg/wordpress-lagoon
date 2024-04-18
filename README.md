@@ -14,11 +14,11 @@ Wordpress version 6.4.3 and PHP version 8.1.
 ### Using Intel host (e.g. Intel-based mac)
 
 
-`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:[tag]`
 
-`docker image rm salsadigitalau/wordpress-lagoon:latest`
+`docker image rm salsadigital/wordpress-lagoon-cli:latest`
 
-`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
+`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:latest`
 
 ### Using Apple-silicon host (e.g. M-cip-based mac)
 
@@ -34,21 +34,21 @@ Pull the access details, including the Docker Hub username and your personal acc
 
 The following command will build and push the images:
 
-`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:[tag]`
 
-`docker image rm salsadigitalau/wordpress-lagoon:latest`
+`docker image rm salsadigital/wordpress-lagoon-cli:latest`
 
-`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
+`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigital/wordpress-lagoon-cli:latest`
 
 ## Push image to Dockerhub
 (If you did not login in the previous steps above)
 
-Login to docker first, ensure salsadigitalau/wordpress-lagoon project
+Login to docker first, ensure salsadigital/wordpress-lagoon-cli project
 has you listed in the access group.
 
-`docker push salsadigitalau/wordpress-lagoon:[tag]`
+`docker push salsadigital/wordpress-lagoon-cli:[tag]`
 
-`docker push salsadigitalau/wordpress-lagoon:latest`
+`docker push salsadigital/wordpress-lagoon-cli:latest`
 
 ### Revert to default builder
 
