@@ -21,7 +21,10 @@ Wordpress version 6.4.3 and PHP version 8.1.
 `docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:latest`
 
 ### Using Apple-silicon host (e.g. M-cip-based mac)
-`docker buildx create --name mybuilder --use`
+
+Replace [tag] with the intended tag of your image.
+
+`docker buildx create --name [tag] --use`
 
 `docker buildx inspect --bootstrap`
 
