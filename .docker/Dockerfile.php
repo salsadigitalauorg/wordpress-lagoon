@@ -1,8 +1,9 @@
 ARG CLI_IMAGE
+ARG PHP_VERSION=8.3
 
 FROM ${CLI_IMAGE} as cli
 
-FROM uselagoon/php-8.2-fpm:latest
+FROM uselagoon/php-${PHP_VERSION}-fpm:24.10.0
 
 RUN apk update \
     && apk add --no-cache \
