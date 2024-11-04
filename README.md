@@ -5,69 +5,79 @@ download the latest image.
 
 ## Build local images
 
-`rm -Rf vendor`
+First, clean up any existing vendor directory and update composer:
 
-`composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update`
+```bash
+rm -Rf vendor && \
+composer self-update --2 && COMPOSER_MEMORY_LIMIT=1 composer update
+```
 
 **Tagging images**
-`[tag]` syntax as follows: `{wordpress-full-version}_php-{php-minor-version}`. Example: `6.4.3_php-8.2` - this tag reflects
-Wordpress version 6.4.3 and PHP version 8.2.
+Tag syntax follows the pattern: `wp-{wordpress-version}-php-{php-version}`
+Example: `wp-6.4.3-php-8.3` - this tag reflects WordPress version 6.4.3 and PHP version 8.3.
 
-### Using Intel host (e.g. Intel-based mac)
+### Building images (recommended method for all platforms)
 
-`docker image build --no-cache . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+1. Set up buildx builder (if not already done):
+```bash
+docker buildx create --name mywpbuilder --use
+docker buildx inspect --bootstrap
+```
 
-### Using Apple-silicon host (e.g. M-cip-based mac)
-`docker buildx create --name mybuilder --use`
+2. Login to Docker Hub:
+```bash
+# Pull the access details, including the Docker Hub username and your personal access token
+docker login --username <your-username> --password <your-access-token>
+```
 
-`docker buildx inspect --bootstrap`
+3. Build and push the image:
+```bash
+# For multi-platform build (recommended)
+docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . \
+  -f .docker/Dockerfile.cli \
+  -t salsadigital/wordpress-lagoon-cli:wp-6.4.3-php-8.3 \
+  --build-arg PHP_VERSION=8.3
+```
 
-Pull the access details, including the Docker Hub username and your personal access token.
+### Post-build cleanup
 
-`docker login --username <your-username> --password <your-access-token>`
+To avoid problems with the buildx builder, reset to default when done:
+```bash
+docker context use default
+```
 
-The following command will build and push the images:
+## Automated Builds
 
-`docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . -f ./.docker/Dockerfile.cli -t salsadigitalau/wordpress-lagoon:[tag]`
+This repository supports automated builds via GitHub Actions. To trigger a new build:
 
-## Push image to Dockerhub
-(If you did not login in the previous steps above)
+1. Create a new tag following the pattern: `wp-{wordpress-version}-php-{php-version}`
+   Example: `wp-6.4.3-php-8.3`
 
-Login to docker first, ensure salsadigitalau/wordpress-lagoon project
-has you listed in the access group.
+2. Push the tag to GitHub:
+   ```bash
+   git tag wp-6.4.3-php-8.3
+   git push origin wp-6.4.3-php-8.3
+   ```
 
-`docker push salsadigitalau/wordpress-lagoon:[tag]`
+The GitHub Action will automatically build the CLI image for both AMD64 and ARM64 architectures:
+- `salsadigital/wordpress-lagoon-cli:wp-6.4.3-php-8.3`
 
-### Revert to default builder
+You can also trigger a build manually through the GitHub Actions interface.
 
-To avoid problems with new builder on Apple-silicon macs, reset the builder to default:
+## Automated Dependency Updates
 
-`docker context use default`
+This repository uses Renovate Bot to automatically update dependencies. The updates run:
+- Every day at 10 PM Sydney time
+- Only between 10 PM and 5 AM Sydney time
+- Can be manually triggered through GitHub Actions
 
-## Supported environment variables
+The bot will:
+- Automatically update minor and patch versions
+- Create PRs for major version updates
+- Group WordPress plugin updates together
+- Maintain a dependency dashboard in the repository's issues
 
-Refer to the wp-config.php file to see how they are being used.
-
-* COMPRESS_CSS
-* COMPRESS_SCRIPTS
-* CONCATENATE_SCRIPTS
-* ENABLE_WP_CACHE
-* LAGOON_ENVIRONMENT
-* LAGOON_ENVIRONMENT_TYPE
-* LAGOON_PRODUCTION_URL
-* LAGOON_ROUTE
-* MARIADB_DATABASE
-* MARIADB_HOST
-* MARIADB_PASSWORD
-* MARIADB_USERNAME
-* WP_AUTH_KEY
-* WP_AUTH_SALT
-* WP_DEBUG
-* WP_LAGOON_WP2FA
-* WP_LOGGED_IN_KEY
-* WP_LOGGED_IN_SALT
-* WP_NONCE_KEY
-* WP_NONCE_SALT
-* WP_SECURE_AUTH_KEY
-* WP_SECURE_AUTH_SALT
+Configuration:
+- `.github/renovate.json`: Renovate Bot configuration
+- `.github/workflows/renovate.yml`: GitHub Action schedule configuration
 

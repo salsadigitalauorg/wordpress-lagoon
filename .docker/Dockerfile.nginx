@@ -1,6 +1,8 @@
-FROM salsadigitalau/wordpress-lagoon:latest as builder
+ARG WP_VERSION
+ARG PHP_VERSION
+FROM salsadigitalau/wordpress-lagoon:wp-${WP_VERSION}-php-${PHP_VERSION} as builder
 
-FROM uselagoon/nginx:latest
+FROM uselagoon/nginx:24.10.0
 
 RUN apk add --no-cache tzdata
 

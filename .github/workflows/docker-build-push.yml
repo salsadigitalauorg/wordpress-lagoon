@@ -1,0 +1,88 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'php-*'
+    tags:
+      - 'wp-*.*.*-php-*.*'  # Matches tags like wp-6.4.3-php-8.3
+  pull_request:
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: salsadigital/wordpress-lagoon-cli
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract versions from tag or default
+        id: get-versions
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/wp-([0-9]+\.[0-9]+\.[0-9]+)-php-([0-9]+\.[0-9]+)$ ]]; then
+            echo "WP_VERSION=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+            echo "PHP_VERSION=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" =~ ^refs/heads/php-([0-9]+\.[0-9]+)$ ]]; then
+            echo "WP_VERSION=6.4.3" >> $GITHUB_OUTPUT
+            echo "PHP_VERSION=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+          else
+            echo "WP_VERSION=6.4.3" >> $GITHUB_OUTPUT
+            echo "PHP_VERSION=8.3" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Should push to registry
+        id: push
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/master" || \
+                "${{ github.ref }}" =~ ^refs/heads/php- || \
+                "${{ github.ref }}" =~ ^refs/tags/wp- ]]; then
+            echo "push=true" >> $GITHUB_OUTPUT
+          else
+            echo "push=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: .docker/Dockerfile.cli
+          platforms: linux/amd64,linux/arm64
+          push: ${{ steps.push.outputs.push }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PHP_VERSION=${{ steps.get-versions.outputs.PHP_VERSION }}
+            WP_VERSION=${{ steps.get-versions.outputs.WP_VERSION }}

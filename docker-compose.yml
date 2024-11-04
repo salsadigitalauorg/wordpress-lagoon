@@ -25,6 +25,7 @@ x-environment:
     WEBROOT: ${WEBROOT:-web}
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     # XDEBUG_ENABLE: "true"
+    PHP_VERSION: ${PHP_VERSION:-8.3}
 
 volumes:
   uploads: {}
@@ -35,6 +36,8 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile.cli
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.3}
     image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     labels:
       # Lagoon Labels
@@ -70,6 +73,7 @@ services:
       args:
         CLI_IMAGE: *lagoon-project
         IMAGE_VERSION: *image-version
+        PHP_VERSION: ${PHP_VERSION:-8.3}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
