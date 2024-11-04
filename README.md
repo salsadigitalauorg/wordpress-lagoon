@@ -81,3 +81,31 @@ Configuration:
 - `.github/renovate.json`: Renovate Bot configuration
 - `.github/workflows/renovate.yml`: GitHub Action schedule configuration
 
+## Release Process
+
+This repository uses automated release notes generation based on PR labels. When creating a PR, please:
+
+1. Use the PR template
+2. Apply appropriate labels:
+   - 🚨 `breaking-change`: For breaking changes
+   - 🚀 `enhancement`: For new features
+   - 🐛 `bug`: For bug fixes
+   - 🔒 `security`: For security updates
+   - 🔄 `wordpress`: For WordPress core/plugin updates
+   - 🐳 `docker`: For Docker-related changes
+   - 📦 `dependencies`: For dependency updates
+   - 📚 `documentation`: For documentation changes
+   - 🧰 `maintenance`: For maintenance tasks
+
+Release notes are automatically generated when:
+1. A new tag is created
+2. PRs are merged to master
+3. Labels are properly applied to PRs
+
+To create a new release:
+1. Go to the "Releases" section
+2. Click "Draft a new release"
+3. Create a new tag following our version pattern
+4. Let GitHub automatically generate release notes
+5. Review and publish the release
+
