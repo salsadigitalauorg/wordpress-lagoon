@@ -1,32 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":semanticCommits"
   ],
   "branchPrefix": "deps/",
   "baseBranches": ["master"],
   "labels": ["dependencies"],
   "assignees": ["ivangrynenko", "govindmaloo"],
-  "ignorePresets": [":prHourlyLimit2"],
   "rangeStrategy": "replace",
   "timezone": "Australia/Melbourne",
   "enabledManagers": ["composer", "dockerfile", "docker-compose", "github-actions"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Dependencies Dashboard 📊",
-  "semanticCommits": "enabled",
   "semanticCommitType": "chore",
   "semanticCommitScope": "deps",
   "prConcurrentLimit": 10,
   "prHourlyLimit": 5,
+  "schedule": ["after 10pm every weekday", "before 5am every weekday"],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 5am on monday"]
   },
   "packageRules": [
     {
+      "description": "Group Docker image updates",
       "groupName": "Docker images",
       "groupSlug": "docker",
-      "schedule": ["after 10pm every weekday", "before 5am every weekday"],
       "matchManagers": ["dockerfile", "docker-compose"],
       "excludePackageNames": [
         "selenium/standalone-chrome",
@@ -35,26 +35,31 @@
       "enabled": true
     },
     {
+      "description": "Label Docker major updates",
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "docker", "major"]
     },
     {
+      "description": "Label Docker minor/patch updates",
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["minor", "patch"],
       "labels": ["dependencies", "docker"]
     },
     {
+      "description": "Label PHP major updates",
       "matchManagers": ["composer"],
       "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "php", "major"]
     },
     {
+      "description": "Label PHP minor/patch updates",
       "matchManagers": ["composer"],
       "matchUpdateTypes": ["minor", "patch"],
       "labels": ["dependencies", "php"]
     },
     {
+      "description": "Group WordPress plugin updates",
       "matchPackagePatterns": ["^wpackagist-"],
       "matchDatasources": [
         "packagist",

@@ -2,9 +2,14 @@ name: Renovate
 
 on:
   schedule:
-    # Run at 10 PM Sydney time every day (12:00 UTC)
+    # Run at 10 PM Melbourne time (12:00 UTC)
     - cron: '0 12 * * *'
   workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 
 env:
   LOG_LEVEL: debug
@@ -13,11 +18,11 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
-      - name: Get current Sydney time
+      - name: Get current Melbourne time
         id: time
         run: |
-          # Get current hour in Sydney
-          HOUR=$(TZ=Australia/Sydney date +%H)
+          # Get current hour in Melbourne
+          HOUR=$(TZ=Australia/Melbourne date +%H)
           # Check if it's between 22:00 and 05:00
           if [ $HOUR -ge 22 ] || [ $HOUR -lt 5 ]; then
             echo "SHOULD_RUN=true" >> $GITHUB_OUTPUT
@@ -42,4 +47,5 @@ jobs:
           RENOVATE_PLATFORM_COMMIT: true
           RENOVATE_ONBOARDING: true
           RENOVATE_DEPENDENCY_DASHBOARD: true
-          LOG_LEVEL: debug 
+          LOG_LEVEL: debug
+          CONFIG_FILE: .github/renovate.json  # Specify the path to the config file
