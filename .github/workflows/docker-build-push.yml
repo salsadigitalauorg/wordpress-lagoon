@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: salsadigitalau/wordpress-lagoon-cli
+  IMAGE_NAME: salsadigital/wordpress-lagoon-cli
 
 jobs:
   docker:

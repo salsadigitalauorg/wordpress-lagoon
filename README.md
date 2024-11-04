@@ -1,6 +1,6 @@
 # WordPress Composer image to work with Amazee.io platform
 
-Visit https://hub.docker.com/r/salsadigitalau/wordpress-lagoon-cli/tags to 
+Visit https://hub.docker.com/r/salsadigital/wordpress-lagoon-cli/tags to 
 download the latest image.
 
 ## Build local images
@@ -35,7 +35,7 @@ docker login --username <your-username> --password <your-access-token>
 # For multi-platform build (recommended)
 docker buildx build --platform linux/amd64,linux/arm64 --no-cache --push . \
   -f .docker/Dockerfile.cli \
-  -t salsadigitalau/wordpress-lagoon-cli:wp-6.4.3-php-8.3 \
+  -t salsadigital/wordpress-lagoon-cli:wp-6.4.3-php-8.3 \
   --build-arg PHP_VERSION=8.3
 ```
 
@@ -60,7 +60,7 @@ This repository supports automated builds via GitHub Actions. To trigger a new b
    ```
 
 The GitHub Action will automatically build the CLI image for both AMD64 and ARM64 architectures:
-- `salsadigitalau/wordpress-lagoon-cli:wp-6.4.3-php-8.3`
+- `salsadigital/wordpress-lagoon-cli:wp-6.4.3-php-8.3`
 
 You can also trigger a build manually through the GitHub Actions interface.
 
