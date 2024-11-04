@@ -64,3 +64,20 @@ The GitHub Action will automatically build the CLI image for both AMD64 and ARM6
 
 You can also trigger a build manually through the GitHub Actions interface.
 
+## Automated Dependency Updates
+
+This repository uses Renovate Bot to automatically update dependencies. The updates run:
+- Every day at 10 PM Sydney time
+- Only between 10 PM and 5 AM Sydney time
+- Can be manually triggered through GitHub Actions
+
+The bot will:
+- Automatically update minor and patch versions
+- Create PRs for major version updates
+- Group WordPress plugin updates together
+- Maintain a dependency dashboard in the repository's issues
+
+Configuration:
+- `.github/renovate.json`: Renovate Bot configuration
+- `.github/workflows/renovate.yml`: GitHub Action schedule configuration
+

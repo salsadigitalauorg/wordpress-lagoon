@@ -1,0 +1,45 @@
+name: Renovate
+
+on:
+  schedule:
+    # Run at 10 PM Sydney time every day (12:00 UTC)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  LOG_LEVEL: debug
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current Sydney time
+        id: time
+        run: |
+          # Get current hour in Sydney
+          HOUR=$(TZ=Australia/Sydney date +%H)
+          # Check if it's between 22:00 and 05:00
+          if [ $HOUR -ge 22 ] || [ $HOUR -lt 5 ]; then
+            echo "SHOULD_RUN=true" >> $GITHUB_OUTPUT
+          else
+            echo "SHOULD_RUN=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout
+        if: steps.time.outputs.SHOULD_RUN == 'true'
+        uses: actions/checkout@v4
+
+      - name: Self-hosted Renovate
+        if: steps.time.outputs.SHOULD_RUN == 'true'
+        uses: renovatebot/github-action@v39.1.4
+        with:
+          configurationFile: .github/renovate.json
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          RENOVATE_USERNAME: renovate-bot
+          RENOVATE_PLATFORM: github
+          RENOVATE_PLATFORM_COMMIT: true
+          RENOVATE_ONBOARDING: true
+          RENOVATE_DEPENDENCY_DASHBOARD: true
+          LOG_LEVEL: debug 

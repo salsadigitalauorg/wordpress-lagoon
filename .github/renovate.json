@@ -1,0 +1,104 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "branchPrefix": "deps/",
+  "baseBranches": ["master"],
+  "labels": ["dependencies"],
+  "assignees": ["ivangrynenko", "govindmaloo"],
+  "ignorePresets": [":prHourlyLimit2"],
+  "rangeStrategy": "replace",
+  "timezone": "Australia/Melbourne",
+  "enabledManagers": ["composer", "dockerfile", "docker-compose", "github-actions"],
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Dependencies Dashboard 📊",
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 5,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"]
+  },
+  "packageRules": [
+    {
+      "groupName": "Docker images",
+      "groupSlug": "docker",
+      "schedule": ["after 10pm every weekday", "before 5am every weekday"],
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "excludePackageNames": [
+        "selenium/standalone-chrome",
+        "seleniarm/standalone-chromium"
+      ],
+      "enabled": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "docker", "major"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["dependencies", "docker"]
+    },
+    {
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "php", "major"]
+    },
+    {
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["dependencies", "php"]
+    },
+    {
+      "matchPackagePatterns": ["^wpackagist-"],
+      "matchDatasources": [
+        "packagist",
+        "git-refs",
+        "git-tags",
+        "github-releases",
+        "github-tags"
+      ],
+      "groupName": "WordPress plugins",
+      "labels": ["wordpress", "plugins"]
+    },
+    {
+      "matchPackageNames": ["roots/wordpress"],
+      "matchDatasources": [
+        "packagist",
+        "git-refs",
+        "git-tags",
+        "github-releases",
+        "github-tags"
+      ],
+      "labels": ["wordpress", "core"]
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["^Dockerfile\\.cli$", "^Dockerfile\\.php$", "^Dockerfile\\.nginx$"],
+      "matchStrings": [
+        "FROM uselagoon\\/(?<depName>[a-z0-9-]+):(?<currentValue>[0-9.]+)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "uselagoon/{{{depName}}}",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**"
+  ],
+  "composer": {
+    "enabled": true
+  },
+  "docker": {
+    "enabled": true,
+    "pinDigests": true
+  }
+} 
