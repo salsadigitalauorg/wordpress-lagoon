@@ -2,7 +2,7 @@ ARG WP_VERSION
 ARG PHP_VERSION
 FROM salsadigital/wordpress-lagoon-cli:wp-${WP_VERSION}-php-${PHP_VERSION} AS builder
 
-FROM uselagoon/nginx:24.10.0
+FROM uselagoon/nginx:25.1.0
 
 RUN apk add --no-cache tzdata
 
