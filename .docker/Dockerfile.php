@@ -1,7 +1,7 @@
-ARG CLI_IMAGE
-ARG PHP_VERSION=8.3
+ARG WP_VERSION
+ARG PHP_VERSION
 
-FROM ${CLI_IMAGE} as cli
+FROM salsadigital/wordpress-lagoon-cli:wp-${WP_VERSION}-php-8.3.15 AS builder
 
 FROM uselagoon/php-${PHP_VERSION}-fpm:25.1.0
 
@@ -14,4 +14,4 @@ RUN apk update \
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
 
-COPY --from=cli /app /app
+COPY --from=builder /app /app
