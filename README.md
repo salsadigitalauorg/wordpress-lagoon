@@ -1,5 +1,7 @@
 # WordPress Composer image to work with Amazee.io platform
 
+**⚠️ DEPRECATION NOTICE: This branch is deprecated and will no longer receive support or updates.**
+
 Visit https://hub.docker.com/r/salsadigital/wordpress-lagoon-cli/tags to 
 download the latest image.
 
