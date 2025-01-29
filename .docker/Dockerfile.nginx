@@ -1,6 +1,8 @@
 ARG WP_VERSION
 ARG PHP_VERSION
-FROM salsadigital/wordpress-lagoon-cli:wp-${WP_VERSION}-php-${PHP_VERSION} AS builder
+ARG CLI_IMAGE
+
+FROM ${CLI_IMAGE} AS cli
 
 FROM uselagoon/nginx:25.1.0
 
@@ -17,6 +19,6 @@ RUN fix-permissions /etc/nginx/conf.d && \
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
 
-COPY --from=builder /app /app
+COPY --from=cli /app /app
 
 ENV WEBROOT=web

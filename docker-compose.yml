@@ -64,6 +64,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.nginx
       args:
+        CLI_IMAGE: *lagoon-project
         WP_VERSION: ${WP_VERSION:-6.6.2}
         PHP_VERSION: ${PHP_VERSION:-8.3}
     labels:
