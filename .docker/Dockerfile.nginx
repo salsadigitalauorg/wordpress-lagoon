@@ -1,6 +1,6 @@
 ARG WP_VERSION
 ARG PHP_VERSION
-FROM salsadigitalau/wordpress-lagoon:wp-${WP_VERSION}-php-${PHP_VERSION} as builder
+FROM salsadigital/wordpress-lagoon-cli:wp-${WP_VERSION}-php-${PHP_VERSION} AS builder
 
 FROM uselagoon/nginx:24.10.0
 
