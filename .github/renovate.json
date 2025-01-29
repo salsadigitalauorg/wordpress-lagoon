@@ -1,0 +1,109 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits"
+  ],
+  "branchPrefix": "deps/",
+  "baseBranches": ["master"],
+  "labels": ["dependencies"],
+  "assignees": ["ivangrynenko", "govindmaloo"],
+  "rangeStrategy": "replace",
+  "timezone": "Australia/Melbourne",
+  "enabledManagers": ["composer", "dockerfile", "docker-compose", "github-actions"],
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Dependencies Dashboard 📊",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 5,
+  "schedule": ["after 10pm every weekday", "before 5am every weekday"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Group Docker image updates",
+      "groupName": "Docker images",
+      "groupSlug": "docker",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "excludePackageNames": [
+        "selenium/standalone-chrome",
+        "seleniarm/standalone-chromium"
+      ],
+      "enabled": true
+    },
+    {
+      "description": "Label Docker major updates",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "docker", "major"]
+    },
+    {
+      "description": "Label Docker minor/patch updates",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["dependencies", "docker"]
+    },
+    {
+      "description": "Label PHP major updates",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "php", "major"]
+    },
+    {
+      "description": "Label PHP minor/patch updates",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["dependencies", "php"]
+    },
+    {
+      "description": "Group WordPress plugin updates",
+      "matchPackagePatterns": ["^wpackagist-"],
+      "matchDatasources": [
+        "packagist",
+        "git-refs",
+        "git-tags",
+        "github-releases",
+        "github-tags"
+      ],
+      "groupName": "WordPress plugins",
+      "labels": ["wordpress", "plugins"]
+    },
+    {
+      "matchPackageNames": ["roots/wordpress"],
+      "matchDatasources": [
+        "packagist",
+        "git-refs",
+        "git-tags",
+        "github-releases",
+        "github-tags"
+      ],
+      "labels": ["wordpress", "core"]
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["^Dockerfile\\.cli$", "^Dockerfile\\.php$", "^Dockerfile\\.nginx$"],
+      "matchStrings": [
+        "FROM uselagoon\\/(?<depName>[a-z0-9-]+):(?<currentValue>[0-9.]+)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "uselagoon/{{{depName}}}",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**"
+  ],
+  "composer": {
+    "enabled": true
+  },
+  "docker": {
+    "enabled": true,
+    "pinDigests": true
+  }
+} 

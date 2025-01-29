@@ -1,5 +1,3 @@
-version: '2.3'
-
 x-lagoon-project:
   # Lagoon project name (leave `&lagoon-project` when you edit this)
   &lagoon-project wordpress-nginx
@@ -22,13 +20,21 @@ x-environment:
     # Uncomment if you like to have the system behave like in production
     LAGOON_ENVIRONMENT_TYPE: production
     LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD: ${LAGOON_FEATURE_FLAG_ROOTLESS_WORKLOAD:-enabled}
-    MARIADB_DATABASE: ${MARIADB_DATABASE:-lagoon}
-    MARIADB_USERNAME: ${MARIADB_USERNAME:-lagoon}
-    MARIADB_PASSWORD: ${MARIADB_PASSWORD:-lagoon}
-    MARIADB_HOST: ${MARIADB_HOST:-mariadb}
     WEBROOT: ${WEBROOT:-web}
-    # Uncomment to enable xdebug and then restart via `docker-compose up -d`
+    # Uncomment to enable xdebug and then restart via `docker compose up -d`
     # XDEBUG_ENABLE: "true"
+    PHP_VERSION: ${PHP_VERSION:-8.3}
+    # Local database host (not used in production).
+    MARIADB_HOST: mariadb
+    # Local database name (not used in production).
+    MARIADB_DATABASE: lagoon
+    # Local database user (not used in production).
+    MARIADB_USERNAME: lagoon
+    # Local database password (not used in production).
+    MARIADB_PASSWORD: lagoon
+    # MySQL configuration.
+    MYSQL_COLLATION: ${MYSQL_COLLATION:-utf8mb4_general_ci}
+    MYSQL_INNODB_BUFFER_POOL_SIZE: ${MYSQL_INNODB_BUFFER_POOL_SIZE:-512M}
 
 volumes:
   uploads: {}
@@ -39,33 +45,33 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile.cli
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.3}
     image: *lagoon-project # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
-    <<: *default-volumes
-    user: root
-    environment:
-      <<: *default-environment
-    # Mount volumes from the ssh-agent running in Pygmy to inject host SSH key into container. See https://pygmy.readthedocs.io/en/master/ssh_agent/
-    volumes_from: ### Local overrides to mount host SSH keys. Automatically removed in CI.
-      - container:amazeeio-ssh-agent ### Local overrides to mount host SSH keys. Automatically removed in CI.
-    ports:
-      - "35729" # Livereload port in container. Find port on host with `ahoy info` or `docker compose port cli 35729`.
-    #;< LAGOON
     labels:
-      lagoon.type: cli-persistent # See https://docs.lagoon.sh/using-lagoon-advanced/service-types/
-      lagoon.persistent.name: &lagoon-nginx-name nginx-php # Mount the persistent storage of nginx-php pod into this container.
-      lagoon.persistent: &lagoon-persistent-files /app/web/sites/default/files/  # Location where the persistent storage should be mounted.
-    #;> LAGOON
+      # Lagoon Labels
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/content/uploads/ # location where the persistent storage should be mounted
+    << : *default-volumes # loads the defined volumes from the top
+    volumes_from: # mount the ssh-agent from the pygmy or cachalot ssh-agent
+      - container:amazeeio-ssh-agent
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
 
   nginx:
     build:
       context: .
       dockerfile: .docker/Dockerfile.nginx
+      args:
+        WP_VERSION: ${WP_VERSION:-6.6.2}
+        PHP_VERSION: ${PHP_VERSION:-8.3}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/content/uploads/ # define where the persistent storage should be mounted too
     << : *default-volumes # loads the defined volumes from the top
     depends_on:
-      - cli # basically just tells docker-compose to build the cli first
+      - cli # basically just tells docker compose to build the cli first
     environment:
       << : *default-environment # loads the defined environment variables from the top
     networks:
@@ -79,22 +85,24 @@ services:
       args:
         CLI_IMAGE: *lagoon-project
         IMAGE_VERSION: *image-version
+        PHP_VERSION: ${PHP_VERSION:-8.3}
+        WP_VERSION: ${WP_VERSION:-6.6.2}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
       lagoon.persistent: /app/web/content/uploads/ # define where the persistent storage should be mounted too
     << : *default-volumes # loads the defined volumes from the top
     depends_on:
-      - cli # basically just tells docker-compose to build the cli first
+      - cli # basically just tells docker compose to build the cli first
     environment:
       << : *default-environment # loads the defined environment variables from the top
 
   mariadb:
-    image: uselagoon/mariadb
+    image: uselagoon/mysql-8.0:25.1.0
     labels:
       lagoon.type: mariadb
     ports:
-      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker compose port mariadb 3306`
     environment:
       << : *default-environment
 

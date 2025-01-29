@@ -1,4 +1,5 @@
-FROM uselagoon/php-8.2-cli:latest
+ARG PHP_VERSION=8.3
+FROM uselagoon/php-${PHP_VERSION}-cli:25.1.0
 
 RUN apk update \
     && apk add --no-cache \

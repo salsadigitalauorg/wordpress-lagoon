@@ -4,7 +4,11 @@ ahoyapi: v2
 commands:
   up:
     usage: Build project.
-    cmd: docker compose up -d "$@"
+    cmd: |
+      if [ -f .env ]; then
+        export $(cat .env | grep -v '^#' | xargs)
+      fi
+      docker compose up -d "$@"
 
   down:
     usage: Delete project (CAUTION).
@@ -22,7 +26,7 @@ commands:
   clean:
     usage: Stop Docker containers and remove container, images, volumes and networks.
     cmd: |
-      if [ -f "docker compose.yml" ]; then
+      if [ -f "docker-compose.yml" ]; then
         docker compose down --volumes
       fi
       rm -rf ./vendor
@@ -30,17 +34,23 @@ commands:
   build:
     usage: Build project.
     cmd: |
+      if [ -f .env ]; then
+        export $(cat .env | grep -v '^#' | xargs)
+      fi
       docker compose up -d --build --force-recreate "$@"
 
   build-containers:
     usage: Build containers using dockerfiles.
     cmd: |
-      docker build -t salsadigitalau/wordpress-lagoon:latest -f Dockerfile.cli .
+      if [ -f .env ]; then
+        export $(cat .env | grep -v '^#' | xargs)
+      fi
+      docker build -t salsadigital/wordpress-lagoon-cli:latest -f Dockerfile.cli .
 
   push-containers:
     usage: Push containers to the remote repository.
     cmd: |
-      docker push salsadigitalau/wordpress-lagoon:latest
+      docker push salsadigital/wordpress-lagoon-cli:latest
 
   install-site:
     usage: Install a vanilla Wordpress site.
@@ -143,9 +153,20 @@ entrypoint:
   - "-c"
   - "-e"
   - |
-    [ -f .env ] && [ -s .env ] && export $(grep -v '^#' .env | xargs) && if [ -f .env.local ] && [ -s .env.local ]; then export $(grep -v '^#' .env.local | xargs); fi
+    if [ -f .env ]; then
+      set -a
+      source .env
+      set +a
+    fi
+    if [ -f .env.local ]; then
+      set -a
+      source .env.local
+      set +a
+    fi
     export APP=${APP:-/app}
     export WEBROOT=${WEBROOT:-web}
+    export PHP_VERSION=${PHP_VERSION:-8.3}
+    export WP_VERSION=${WP_VERSION:-6.6.2}
     bash -e -c "$0" "$@"
   - '{{cmd}}'
   - '{{name}}'
