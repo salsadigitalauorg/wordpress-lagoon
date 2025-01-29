@@ -26,6 +26,17 @@ x-environment:
     # Uncomment to enable xdebug and then restart via `docker-compose up -d`
     # XDEBUG_ENABLE: "true"
     PHP_VERSION: ${PHP_VERSION:-8.3}
+    # Local database host (not used in production).
+    MARIADB_HOST: mariadb
+    # Local database name (not used in production).
+    MARIADB_DATABASE: lagoon
+    # Local database user (not used in production).
+    MARIADB_USERNAME: lagoon
+    # Local database password (not used in production).
+    MARIADB_PASSWORD: lagoon
+    # MySQL configuration.
+    MYSQL_COLLATION: ${MYSQL_COLLATION:-utf8mb4_general_ci}
+    MYSQL_INNODB_BUFFER_POOL_SIZE: ${MYSQL_INNODB_BUFFER_POOL_SIZE:-512M}
 
 volumes:
   uploads: {}
@@ -85,7 +96,7 @@ services:
       << : *default-environment # loads the defined environment variables from the top
 
   mariadb:
-    image: amazeeio/mariadb
+    image: uselagoon/mysql-8.0:25.1.0
     labels:
       lagoon.type: mariadb
     ports:
