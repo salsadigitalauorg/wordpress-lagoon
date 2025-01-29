@@ -34,6 +34,9 @@ x-environment:
     MARIADB_USERNAME: lagoon
     # Local database password (not used in production).
     MARIADB_PASSWORD: lagoon
+    # MySQL configuration.
+    MYSQL_COLLATION: ${MYSQL_COLLATION:-utf8mb4_general_ci}
+    MYSQL_INNODB_BUFFER_POOL_SIZE: ${MYSQL_INNODB_BUFFER_POOL_SIZE:-512M}
 
 volumes:
   uploads: {}
