@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dc7a0b38d6208d0a2d4d495d6c10196",
+    "content-hash": "8e86a92a7af0751c9c50596d5a837e28",
     "packages": [
         {
             "name": "composer/installers",
@@ -717,21 +717,21 @@
         },
         {
             "name": "salsadigitalauorg/wp_lagoon_logs",
-            "version": "0.4",
+            "version": "0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/salsadigitalauorg/wp_lagoon_logs.git",
-                "reference": "d913d66bbbd9358d062598ccdebcde833e1be3d7"
+                "reference": "49f1609f6b459559244528d58ea66c30775566de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/d913d66bbbd9358d062598ccdebcde833e1be3d7",
-                "reference": "d913d66bbbd9358d062598ccdebcde833e1be3d7",
+                "url": "https://api.github.com/repos/salsadigitalauorg/wp_lagoon_logs/zipball/49f1609f6b459559244528d58ea66c30775566de",
+                "reference": "49f1609f6b459559244528d58ea66c30775566de",
                 "shasum": ""
             },
             "require": {
                 "inpsyde/wonolog": "^1.0",
-                "php": ">=7.4.0"
+                "php": ">=8.2"
             },
             "type": "wordpress-muplugin",
             "autoload": {
@@ -761,9 +761,9 @@
             ],
             "support": {
                 "issues": "https://github.com/salsadigitalauorg/wp_lagoon_logs/issues",
-                "source": "https://github.com/salsadigitalauorg/wp_lagoon_logs/tree/0.4"
+                "source": "https://github.com/salsadigitalauorg/wp_lagoon_logs/tree/0.6"
             },
-            "time": "2023-08-11T08:30:03+00:00"
+            "time": "2025-04-16T04:08:56+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2227,7 +2227,7 @@
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.2.19"
+        "php": "8.2.28"
     },
     "plugin-api-version": "2.6.0"
 }
