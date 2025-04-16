@@ -1,6 +1,10 @@
-FROM salsadigitalau/wordpress-lagoon:latest as builder
+ARG WP_VERSION
+ARG PHP_VERSION
+ARG CLI_IMAGE
 
-FROM uselagoon/nginx:latest
+FROM ${CLI_IMAGE} AS cli
+
+FROM uselagoon/nginx:25.4.0
 
 RUN apk add --no-cache tzdata
 
@@ -15,6 +19,6 @@ RUN fix-permissions /etc/nginx/conf.d && \
 # Create temporary wordpress log file.
 RUN touch /tmp/wp-errors.log && fix-permissions /tmp/wp-errors.log
 
-COPY --from=builder /app /app
+COPY --from=cli /app /app
 
 ENV WEBROOT=web

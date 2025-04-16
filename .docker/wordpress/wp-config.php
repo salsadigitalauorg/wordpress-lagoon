@@ -106,10 +106,14 @@ define('DB_PASSWORD', getenv('MARIADB_PASSWORD') ?: 'lagoon');
 define('DB_HOST', getenv('MARIADB_HOST') ?: 'mariadb');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', 'utf8mb4');
+define('DB_CHARSET', getenv('MARIADB_CHARSET') ?: 'utf8mb4');
 
 /** The Database Collate type. Don't change this if in doubt. */
-define('DB_COLLATE', '');
+define('DB_COLLATE', getenv('MARIADB_COLLATE') ?: 'utf8mb4_general_ci');
+
+/** Disable SSL for database connections */
+define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
+define('MYSQL_SSL_SET', false);
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -217,4 +221,3 @@ define( 'WP_AUTO_UPDATE_CORE', false );
 
 /** Sets up WordPress vars and included files. */
 require_once( ABSPATH . 'wp-settings.php' );
-

@@ -1,8 +1,10 @@
+ARG WP_VERSION
+ARG PHP_VERSION
 ARG CLI_IMAGE
 
-FROM ${CLI_IMAGE} as cli
+FROM ${CLI_IMAGE} AS cli
 
-FROM uselagoon/php-8.2-fpm:latest
+FROM uselagoon/php-${PHP_VERSION}-fpm:25.4.0
 
 RUN apk update \
     && apk add --no-cache \
