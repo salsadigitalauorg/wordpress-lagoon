@@ -1,0 +1,44 @@
+changelog:
+  exclude:
+    labels:
+      - 'skip-changelog'
+      - 'dependencies'
+  categories:
+    - title: 🚨 Breaking Changes
+      labels:
+        - 'breaking-change'
+        - 'major'
+    - title: 🚀 Features
+      labels:
+        - 'enhancement'
+        - 'feature'
+    - title: 🐛 Bug Fixes
+      labels:
+        - 'bug'
+        - 'fix'
+        - 'bugfix'
+        - 'regression'
+    - title: 🔒 Security Updates
+      labels:
+        - 'security'
+    - title: 🔄 WordPress Core & Plugins
+      labels:
+        - 'wordpress'
+        - 'plugins'
+        - 'core'
+    - title: 🐳 Docker Updates
+      labels:
+        - 'docker'
+    - title: 📦 Dependency Updates
+      labels:
+        - 'dependencies'
+    - title: 📚 Documentation
+      labels:
+        - 'documentation'
+    - title: 🧰 Maintenance
+      labels:
+        - 'maintenance'
+        - 'chore'
+    - title: Other Changes
+      labels:
+        - '*'
